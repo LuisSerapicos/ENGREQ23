@@ -1,20 +1,102 @@
-CEO (30 min): O CEO quer uma aplicação que cuide da gestão dos processos dos apicultores. Este espera que a implementação das soluções com vista a otimizar e auxiliar as funções dos apicultores, lhe tragam rendimento mensal/anual, sendo que também se deve considerar a inclusão de serviços de manutenção. O desenvolvimento da aplicação deve ser realizado dentro dum custo acessível. A aplicação deve estar disponível para aquisição por empresas com mais de um utilizador, sendo que o preço da mesma deve estar adequado ao número de pessoas que a vão utilizar.
+# Engenharia Requisitos
+## DGAV
 
-Apicultor: 
+### Realização de Fecho Sanitário:
+
+- Compete à DGAV realizar fechos sanitários em casos de surgimento de doenças declaradas pelo apicultor.
+- O objetivo é proteger as colmeias e prevenir a propagação dessas doenças para outros apiários.
+
+### Consulta sobre Doenças das Abelhas:
+
+- A DGAV deve ser capaz de receber consultas relacionadas a doenças que afetam as abelhas de forma eficiente e precisa.
+- Deve ser capaz de fornecer informações atualizadas e orientações sobre tratamentos disponíveis para combater as doenças das abelhas.
+- Geração de relatórios.
+
+### Comunicação com Apicultores:
+
+- Deve estabelecer um canal de comunicação eficaz com os apicultores para receber relatórios de problemas, dúvidas e preocupações.
+- Manter uma abordagem de resposta rápida e acessível para atender às necessidades dos apicultores.
+
+### Agendamento de Inspeções:
+
+- A DGAV deve ter um sistema para agendar inspeções em áreas sob o seu controlo, a fim de monitorizar as condições das colmeias e garantir a conformidade com as regulamentações.
+- Deve ser capaz de programar inspeções de forma organizada e eficaz.
+
+### Aplicação de Sanções e Fiscalização:
+
+- A DGAV deve estabelecer processos claros para a aplicação de sanções em casos de não cumprimento das regulamentações apícolas.
+- Deve manter registos adequados de infrações e garantir que as sanções sejam aplicadas de maneira justa e consistente.
+## Entidades Certificadoras
+
+### Certificação Biológica da Produção:
+
+- As Entidades Certificadoras têm a obrigação de realizar a certificação biológica da produção de mel, cera, geleia real e própolis, garantindo que estes produtos cumprem os padrões estabelecidos para a produção biológica.
+
+### Inspeções e Cumprimento de Requisitos:
+
+- A certificação é obtida através de uma auditoria em que o apicultor envia os documentos necessários para a obter, e é realizada uma auditoria ao apiário para verificar o cumprimento dos requisitos. Essa auditoria realiza-se no inicio, pode-se realizar uma auditoria intermédia(opcional/paga) e uma auditoria final.
+- Se a empresa já tiver certificação apenas tem que fazer uma auditoria de renovação.
+- Não podem ser cometidas mais de três infrações, e a não correção das infrações numa inspeção futura resulta em multas para o apicultor.
+
+### Comunicação de Problemas durante Inspeções:
+
+- Caso surjam problemas durante uma inspeção, estes devem ser comunicados ao apicultor, permitindo-lhe abordar as questões identificadas.
+
+### Relatórios e Registos:
+
+- As inspeções incluem a elaboração de relatórios por apicultor ou apiário e o registo de produtos certificados como biológicos.
+- Todos os dados relevantes devem ser registados num sistema para consulta futura.
+- Acesso aos Cadernos de Campo do Apiário:
+
+- As Entidades Certificadoras devem ter a capacidade de consultar os cadernos de campo do apiário para verificar o cumprimento dos padrões de produção biológica.
+
+## DGADR
 
 
+### Receção da Declaração Anual de Existências:
 
-DGAV: O DGAV (Direção-Geral de Alimentação e Veterinária) tem como responsabilidades a consulta acerca das doenças que afetam as abelhas e, consequentemente, a orientação sobre os tratamentos necessários. Além disso, realiza consultas com os apicultores, agenda inspeções nas áreas sob controlo e aplica sanções em casos de não cumprimento das regulamentações.
+- A DGADR deve ser capaz de receber a declaração anual de existências dos apicultores de forma eficiente e precisa.
 
+### Concessão de Subsídios Apícolas:
 
+- A DGADR deve conceber subsídios para apoiar os apicultores na sua atividade apícola.
+- Deve ser estabelecido um processo claro para candidaturas e avaliação de elegibilidade.
 
-Nota: Zonas Controladas/Não Controladas – Autorizações/Comunicações
-           Agendar abates de colmeias.
-	Requisição de apoios europeus
-Entidades Gestoras de Zonas Controladas: As Entidades Gestoras de Zonas Controladas devem ser informadas quando um apicultor quer movimentar um apiário para uma Zona Controlada e deve ser feito um pedido às mesmas, caso o apicultor queira mover um apiário para Zonas Controladas. Cabe também a estas entidades, divulgar os novos tratamentos das abelhas para conhecimento dos apicultores. Compete à DGADR realizar fechos sanitários em casos de surgimento de doenças, visando a proteção das colmeias e a prevenção da propagação dessas doenças para outros apiários. A DGADR deve receber pedidos para obtenção de subsídios de forma a apoiar os apicultores na sua atividade apícola.
+### Auditorias para Verificação da Utilização de Fundos:
 
+- Os apicultores só são elegíveis para subsídios se não apresentarem dívidas e tiverem todos os documentos em ordem.
+- Depois da aprovação do subsídio a DGADR faz inspeções para verificar se o apicultor está a utilizar o subsídio de forma correta.
+- Se o fundo for utilizado para a obtenção de equipamentos, a DGADR deve verificar se o equipamento foi adquirido e se está a ser utilizado.
+- A DGADR deve consultar o histórico de fundos utilizados pelo apicultor para verificar se o apicultor já atingiu o limite de fundos que pode receber.
+## Entidades Gestoras de Zonas Controladas
 
+### Aprovação para Movimento de Apiários:
 
+- As Entidades Gestoras de Zonas Controladas devem ser notificadas quando um apicultor deseja mover um apiário para uma Zona Controlada.
+- Deve existir um processo formal de pedido de aprovação para mover um apiário para Zonas Controladas.
+- A aprovação pode ficar pendente se houver um fecho sanitário no apiário em questão.
 
-Nota: Auditorias
-Entidades Certificadoras: As Entidades Certificadoras têm a obrigação de realizar a certificação biológica da produção de mel, cera, geleia real e própolis, garantindo a conformidade destes produtos com os padrões e regulamentações estabelecidos para a produção biológica. Esta certificação é obtida através de inspeções. Caso surjam alguns problemas durante a inspeção, vão ser comunicados esses mesmos problemas ao apicultor, de forma a que este consiga tratá-los. A inspeção inclui o relatório por apiário e registo de produtos, e deve ser registada no sistema de forma a poder ser consultada no futuro. Estas entidades devem ainda poder consultar os cadernos de campo do apiário. 
+### Gestão do Abate de Colmeias:
+
+- As entidades devem ser informadas quando ocorrer o abate de uma colmeia numa Zona Controlada.
+- Deve ser estabelecido um procedimento para documentar e monitorizar o abate de colmeias.
+
+### Divulgação de Tratamentos das Abelhas:
+
+- Cabe às Entidades Gestoras de Zonas Controladas a responsabilidade de divulgar informações sobre novos tratamentos das abelhas para conhecimento dos apicultores.
+- Deve existir um canal de comunicação eficaz para disseminar estas informações.
+
+### Recomendação de Fitofármacos e Prevenção de Doenças:
+
+- A DGADR deve aconselhar a compra de fitofármacos para ajudar na prevenção de doenças das abelhas.
+- Deve ser garantido que a recomendação desses produtos está em conformidade com as regulamentações.
+
+### Notificação de Novas Doenças:
+
+- No caso de surgimento de uma nova doença numa Zona Controlada, as entidades devem notificar prontamente os apicultores afetados.
+- Deve existir um procedimento de notificação rápida para situações de emergência.
+
+### Gestão do Calendário Apícola:
+
+- As Entidades Gestoras de Zonas Controladas são responsáveis pela gestão do calendário apícola na respetiva zona.
+- Deve ser estabelecido um calendário claro que considere as necessidades sazonais da apicultura.
