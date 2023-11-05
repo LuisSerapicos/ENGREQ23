@@ -1,4 +1,43 @@
 # Engenharia Requisitos
+
+## Apicultor
+
+### Gestão de Colmeias e Abelhas:
+
+- O apicultor utiliza o sistema para fazer registos de cada colmeia, com informações como a localização, alimentações, doenças, inspeções e outras necessidades.
+
+### Registos de Alimentação:
+
+- Deve registar informações sobre a alimentação das abelhas e consultar quando e quantidades a suprir.
+
+### Controlo de Doenças e Pragas:
+
+- O apicultor deve consultar um registo de tratamentos das abelhas para prevenção de doenças e pragas, recebendo aconselhamentos de fitofármacos, de outras entidades, para sua administração.
+
+### Alertas de Emergência:
+
+- Deve consultar o sistema de alertas para problemas críticos, como a presença de vespas asiáticas ou outros eventos de emergência declarados pelas entidades competentes.
+
+### Registos de Inspeção:
+
+- Deve manter registos das inspeções feitas às colmeias, com os dados releveants (data, descrição, observações, etc.).
+
+### Gestão de Colheita:
+
+- O apicultor utiliza o sistema para acompanhar a produção de mel, pólen e outros produtos em cada colmeia, bem como o histórico de colheitas.
+
+### Agenda de Trabalho:
+
+- O apicultor deve utilizar uma agenda que o ajude a planear e estabelecer tarefas sazonais, como alimentações ou inspeções periódicas.
+
+### Mapeamento e Geo-referenciação:
+
+- O apicultor tem ao seu dispôr no sistema, um mapa para localizar e registrar cada colmeia no campo, observando as restrições legais e as distâncias das ruas e zonas florestais.
+
+### Gestão de Stocks:
+
+- Deve rastrear o stock de materiais apícolas, como caixas, alças, roupas de proteção e medicamentos, e receber alertas para reabastecimento quando necessário.
+
 ## DGAV
 
 ### Realização de Fecho Sanitário:
@@ -26,6 +65,7 @@
 
 - A DGAV deve estabelecer processos claros para a aplicação de sanções em casos de não cumprimento das regulamentações apícolas.
 - Deve manter registos adequados de infrações e garantir que as sanções sejam aplicadas de maneira justa e consistente.
+
 ## Entidades Certificadoras
 
 ### Certificação Biológica da Produção:
@@ -52,7 +92,6 @@
 
 ## DGADR
 
-
 ### Receção da Declaração Anual de Existências:
 
 - A DGADR deve ser capaz de receber a declaração anual de existências dos apicultores de forma eficiente e precisa.
@@ -68,6 +107,7 @@
 - Depois da aprovação do subsídio a DGADR faz inspeções para verificar se o apicultor está a utilizar o subsídio de forma correta.
 - Se o fundo for utilizado para a obtenção de equipamentos, a DGADR deve verificar se o equipamento foi adquirido e se está a ser utilizado.
 - A DGADR deve consultar o histórico de fundos utilizados pelo apicultor para verificar se o apicultor já atingiu o limite de fundos que pode receber.
+
 ## Entidades Gestoras de Zonas Controladas
 
 ### Aprovação para Movimento de Apiários:
