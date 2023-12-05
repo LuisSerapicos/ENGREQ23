@@ -3,8 +3,8 @@ package com.example.happibee.Data.Model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "apiario")
-data class Apiario(
+@Entity(tableName = "apicultor")
+data class Apicultor(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val location: String,

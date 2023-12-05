@@ -51,7 +51,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.happibee.ViewModel.ApiarioViewModel
 
 @Composable
 fun DeclararActivity(navController: NavHostController) {
@@ -162,10 +161,6 @@ fun ShowForm(navController: NavHostController) {
         }
     }
 
-    //val viewModel: ApiarioViewModel = hiltViewModel()
-    //Log.d(MainActivity::class.java.simpleName, viewModel.toString())
-    //val result by viewModel.readAll.collectAsState(initial = emptyList())
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -174,20 +169,6 @@ fun ShowForm(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        /*if(result.isNotEmpty()) {
-            for (apiario in result) {
-                Text(
-                    text = apiario.name,
-                    fontSize = MaterialTheme.typography.headlineMedium.fontSize
-                )
-            }
-        }
-        else {
-            Text(
-                text = "Empty Database",
-                fontSize = MaterialTheme.typography.headlineMedium.fontSize
-            )
-        }*/
 
         Text(
             text = "Register to our app",

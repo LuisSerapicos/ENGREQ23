@@ -1,4 +1,4 @@
-package com.example.happibee.Data.Dao
+package com.example.happibee.Data.Dao.Apiario
 
 import androidx.room.Dao
 import androidx.room.Delete
