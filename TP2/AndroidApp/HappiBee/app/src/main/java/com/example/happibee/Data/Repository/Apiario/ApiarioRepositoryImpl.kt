@@ -4,8 +4,7 @@ import com.example.happibee.Data.Model.Apiario
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class ApiarioRepositoryImpl @Inject constructor (private val dao: ApiarioRepository):
-    ApiarioRepository {
+class ApiarioRepositoryImpl @Inject constructor (private val dao: ApiarioRepository): ApiarioRepository {
     override suspend fun insertApiario(apiario: Apiario) = dao.insertApiario(apiario = apiario)
 
     override suspend fun updateApiario(apiario: Apiario) = dao.updateApiario(apiario = apiario)

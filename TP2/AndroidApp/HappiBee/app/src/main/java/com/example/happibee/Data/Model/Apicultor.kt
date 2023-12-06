@@ -7,8 +7,7 @@ import androidx.room.PrimaryKey
 data class Apicultor(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val location: String,
-    //@ColumnInfo(name = "email") val email: String,
-    //@ColumnInfo(name = "phone") val phone: String,
-    //@ColumnInfo(name = "password") val password: String
+    val email: String,
+    val phone: String,
+    val password: String
 )

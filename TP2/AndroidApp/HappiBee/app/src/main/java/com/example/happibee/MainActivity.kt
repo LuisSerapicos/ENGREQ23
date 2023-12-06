@@ -1,6 +1,7 @@
 package com.example.happibee
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -45,13 +46,25 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
+import com.example.happibee.APIs.Comments
+import com.example.happibee.APIs.MyAPI
 import com.example.happibee.Presentation.Navigation.AppNavigation
 import com.example.happibee.ui.theme.HappiBeeTheme
 import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
+
+    //API URL
+    private val BASE_URL = "https://jsonplaceholder.typicode.com/"
+    private val TAG: String = "CHECK_RESPONSE"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -66,7 +79,38 @@ class MainActivity : ComponentActivity() {
             }
 
             //AppBar()
+
+            getAllComments()
         }
+    }
+
+    //API method to get comments
+    private fun getAllComments() {
+        val api = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(MyAPI::class.java)
+
+        api.getComments().enqueue(object : Callback<List<Comments>> {
+            override fun onResponse(
+                call: Call<List<Comments>>,
+                response: Response<List<Comments>>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        for (comment in it) {
+                            Log.i(TAG, "onResponse: ${comment.body}")
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Comments>>, t: Throwable) {
+                Log.i(TAG, "onFailure: ${t.message}")
+            }
+
+        })
     }
 }
 
