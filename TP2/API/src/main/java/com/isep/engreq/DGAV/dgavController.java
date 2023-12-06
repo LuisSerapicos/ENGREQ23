@@ -13,11 +13,9 @@ public class dgavController {
 
 
     @PostMapping("/verify-location")
-    public String verifyLocation(@RequestBody LocationModel locationRequest) {
+    public responseModel verifyLocation(@RequestBody LocationModel locationRequest) {
         double latitude = locationRequest.getLatitude();
         double longitude = locationRequest.getLongitude();
-
-
 
 
 
@@ -26,10 +24,12 @@ public class dgavController {
 
 
         if (isInsidePortugal) {
-            return "A localização com latitude " + latitude + " e longitude " + longitude + " foi verificada com sucesso!";
+            return new responseModel(true, "Localização dentro de Portugal");
         } else {
-            return "A localização com latitude " + latitude + " e longitude " + longitude + " não é permitida!";
+            return new responseModel(false, "Localização fora de Portugal");
         }
+
+
 
 
     }

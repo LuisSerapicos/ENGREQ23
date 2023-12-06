@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
+import androidx.activity.contextaware.withContextAvailable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,8 +26,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,31 +36,40 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.room.Room
-import com.example.happibee.APIs.Comments
+import com.example.happibee.APIs.Location
 import com.example.happibee.APIs.MyAPI
 import com.example.happibee.Presentation.Navigation.AppNavigation
 import com.example.happibee.ui.theme.HappiBeeTheme
+import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.coroutines.coroutineContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
 
     //API URL
-    private val BASE_URL = "https://jsonplaceholder.typicode.com/"
+    private val BASE_URL = "http://10.0.2.2:9000/"
     private val TAG: String = "CHECK_RESPONSE"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,37 +87,69 @@ class MainActivity : ComponentActivity() {
 
             //AppBar()
 
-            getAllComments()
+            getLocation()
         }
     }
 
     //API method to get comments
-    private fun getAllComments() {
-        val api = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(MyAPI::class.java)
+    private fun getLocation() {
+        val requestBody = Location("38.47", "-8.24")
 
-        api.getComments().enqueue(object : Callback<List<Comments>> {
-            override fun onResponse(
-                call: Call<List<Comments>>,
-                response: Response<List<Comments>>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        for (comment in it) {
-                            Log.i(TAG, "onResponse: ${comment.body}")
+        lifecycleScope.launch {
+            try {
+                // Call the suspend function within the coroutine scope
+                val result = withContext(Dispatchers.IO) {
+                    getLocationSuspend(requestBody)
+                }
+
+                // Access properties dynamically
+                val string1 = result.get("message")?.asString
+                val string2 = result.get("insidePortugal")?.asString
+
+                Log.i(TAG, "String 1: $string1")
+                Log.i(TAG, "String 2: $string2")
+            } catch (e: Exception) {
+                Log.i(TAG, "onFailure: ${e.message}")
+            }
+        }
+    }
+
+    suspend fun getLocationSuspend(requestBody: Location): JsonObject {
+        return suspendCancellableCoroutine { continuation ->
+            val api = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(MyAPI::class.java)
+
+            api.getLocation(requestBody).enqueue(object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        responseBody?.let {
+                            // Resume the coroutine with the result
+                            continuation.resume(it)
+                        } ?: run {
+                            // If the response body is null, handle the error
+                            continuation.resumeWithException(NullPointerException("Response body is null"))
                         }
+                    } else {
+                        // If the response is not successful, handle the error
+                        continuation.resumeWithException(Exception("Request failed with code ${response.code()}"))
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<List<Comments>>, t: Throwable) {
-                Log.i(TAG, "onFailure: ${t.message}")
-            }
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    // Handle the failure
+                    continuation.resumeWithException(t)
+                }
+            })
 
-        })
+            // Cancel the request if the coroutine is cancelled
+            continuation.invokeOnCancellation {
+                api.cancel()
+            }
+        }
     }
 }
 
