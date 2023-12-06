@@ -1,5 +1,8 @@
 package com.example.happibee.Presentation.Apiarios.Views
 
+import android.content.Context
+import android.security.ConfirmationPrompt
+import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +19,9 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -24,10 +30,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,18 +45,27 @@ import androidx.navigation.NavHostController
 import com.example.happibee.Presentation.Navigation.Screens
 import com.example.happibee.Presentation.Apiarios.ViewModel.HomeViewModel
 
+fun showMessage(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
     val apiarios=viewModel.apiarios.collectAsState(initial = emptyList())
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(text = "Meus apiários")
-                }
-            )
-        }, floatingActionButton = { FloatingActionButton(onClick = {
+                },
+                actions = {
+                    IconButton(onClick = {
+                        showMessage(context, message = "test")
+                    }){}
+            })
+            }, floatingActionButton = { FloatingActionButton(onClick = {
             navController.navigate(Screens.AddScreen.route) }) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "")
         }}
@@ -88,4 +105,40 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
 
         }
     }
+}
+
+
+@Composable
+fun CommonDialog(
+    title: String?,
+    state: MutableState<Boolean>,
+    content: @Composable (() -> Unit)? = null
+) {
+    AlertDialog(
+        onDismissRequest = {
+            state.value = false
+        },
+        title = title?.let {
+            {
+                Column(
+                    Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(text = title)
+                    Divider(modifier = Modifier.padding(bottom = 8.dp))
+                }
+            }
+        },
+        text = content,
+        dismissButton = {
+            Button(onClick = { state.value = false }) {
+                Text("Cancel")
+            }
+        },
+        confirmButton = {
+            Button(onClick = { state.value = false }) {
+                Text("Ok")
+            }
+        }, modifier = Modifier.padding(vertical = 8.dp)
+    )
 }
