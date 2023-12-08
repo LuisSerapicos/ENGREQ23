@@ -59,11 +59,11 @@ public class Cwecpl {
         System.out.println("vunjw");
         System.out.println("mrxiu");
         System.out.println("ctnrc");
-        System.out.println("hcvba");
-        System.out.println("jxwlg");
-        System.out.println("cjshe");
-        System.out.println("gwcmh");
-        System.out.println("mofcv");
-        System.out.println("yxjcw");
+        System.out.println("iwgmg");
+        System.out.println("xlfwg");
+        System.out.println("dnofi");
+        System.out.println("buyav");
+        System.out.println("dbjfp");
+        System.out.println("xnudx");
     }
 }
