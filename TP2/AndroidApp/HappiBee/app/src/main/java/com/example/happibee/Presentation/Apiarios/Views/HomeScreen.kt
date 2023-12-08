@@ -9,15 +9,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -27,6 +31,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -35,6 +40,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,7 +58,7 @@ fun showMessage(context: Context, message: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
-    val apiarios=viewModel.apiarios.collectAsState(initial = emptyList())
+    val apiarios = viewModel.apiarios.collectAsState(initial = emptyList())
     val context = LocalContext.current
     Scaffold(
         topBar = {
@@ -61,42 +67,57 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                     Text(text = "Meus apiários")
                 },
                 actions = {
-                    IconButton(onClick = {
-                        showMessage(context, message = "test")
-                    }){}
-            })
-            }, floatingActionButton = { FloatingActionButton(onClick = {
-            navController.navigate(Screens.AddScreen.route) }) {
-            Icon(imageVector = Icons.Default.Add, contentDescription = "")
-        }}
+                    Surface(onClick = {
+                        showMessage(
+                            context,
+                            message = "Declaração Anual Enviada!"
+                        )
+                    }) {
+                        Text(text = "Declaração Anual")
+                    }
+                })
+        }, floatingActionButton = {
+            FloatingActionButton(onClick = {
+                navController.navigate(Screens.AddScreen.route)
+            }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "")
+            }
+        }
     ) {
-        LazyColumn(modifier = Modifier.padding(it)){
-            items(apiarios.value){
-                Box(modifier = Modifier
-                    .padding(16.dp)
-                    .border(1.dp, color = Color.Gray)){
+        LazyColumn(modifier = Modifier.padding(it)) {
+            items(apiarios.value) {
+                Box(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .border(1.dp, color = Color.Gray)
+                ) {
                     Column(modifier = Modifier.padding(20.dp)) {
-                        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center) {
-                            Text(text = "#${apiarios.value.indexOf(it)+1}")
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(text = "#${apiarios.value.indexOf(it) + 1}")
                             Spacer(modifier = Modifier.weight(1f))
                             IconButton(onClick = {
                                 navController.navigate(Screens.UpdateScreen.getById(it.id))
                             }) {
                                 Icon(
-                                    tint=Color.Blue.copy(0.5f),
-                                    imageVector = Icons.Default.Edit, contentDescription ="" )
+                                    tint = Color.Blue.copy(0.5f),
+                                    imageVector = Icons.Default.Edit, contentDescription = ""
+                                )
                             }
                             IconButton(onClick = {
                                 viewModel.deleteNote(apiario = it)
                             }) {
 
                                 Icon(
-                                    tint=Color.Red.copy(0.5f),
-                                    imageVector = Icons.Default.Delete, contentDescription ="" )
+                                    tint = Color.Red.copy(0.5f),
+                                    imageVector = Icons.Default.Delete, contentDescription = ""
+                                )
                             }
                         }
-                        Text(text =it.name, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                        Text(text = it.name, fontWeight = FontWeight.Bold, fontSize = 24.sp)
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(text = it.location)
                     }

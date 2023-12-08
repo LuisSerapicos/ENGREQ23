@@ -17,20 +17,20 @@ public class dgavController {
         double latitude = locationRequest.getLatitude();
         double longitude = locationRequest.getLongitude();
 
-
+        // 5-second delay
+        try {
+            Thread.sleep(5000); // 5000 milliseconds = 5 seconds
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         boolean isInsidePortugal = isLocationInsidePortugal(latitude, longitude);
-
-
 
         if (isInsidePortugal) {
             return new responseModel(true, "Localização dentro de Portugal");
         } else {
             return new responseModel(false, "Localização fora de Portugal");
         }
-
-
-
 
     }
 

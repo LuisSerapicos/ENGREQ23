@@ -65,8 +65,8 @@ fun AddScreen(navController: NavHostController, viewModel: AddViewModel = hiltVi
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    viewModel.addNote()
-                    navController.popBackStack()
+                    viewModel.getLocation()
+                    //navController.popBackStack()
                 }) {
                 Text(text = "Adicionar Apiário")
             }

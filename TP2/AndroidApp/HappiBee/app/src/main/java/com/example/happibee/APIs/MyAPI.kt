@@ -10,6 +10,4 @@ import retrofit2.http.POST
 interface MyAPI {
     @POST("dgav/verify-location")
     fun getLocation(@Body requestBody: Location): Call<JsonObject>
-
-    fun cancel()
 }
