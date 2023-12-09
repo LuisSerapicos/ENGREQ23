@@ -47,6 +47,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.happibee.Presentation.Navigation.Screens
 import com.example.happibee.Presentation.Apiarios.ViewModel.HomeViewModel
@@ -58,7 +59,7 @@ fun showMessage(context: Context, message: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
-    val apiarios = viewModel.apiarios.collectAsState(initial = emptyList())
+    val apiarios = viewModel.filteredApiarios.collectAsState(initial = emptyList())
     val context = LocalContext.current
     Scaffold(
         topBar = {
