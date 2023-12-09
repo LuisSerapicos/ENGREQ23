@@ -2,20 +2,21 @@ package com.isep.engreq.DGAV;
 
 public class responseModel {
     //true false
-    private boolean isInsidePortugal;
+    private boolean value;
     private String message;
 
-    public responseModel(boolean isInsidePortugal, String message) {
-        this.isInsidePortugal = isInsidePortugal;
+
+    public responseModel(boolean value, String message) {
+        this.value = value;
         this.message = message;
     }
 
-    public boolean isInsidePortugal() {
-        return isInsidePortugal;
+    public boolean isValue() {
+        return value;
     }
 
-    public void setInsidePortugal(boolean insidePortugal) {
-        isInsidePortugal = insidePortugal;
+    public void setValue(boolean value) {
+        this.value = value;
     }
 
     public String getMessage() {
