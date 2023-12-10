@@ -41,14 +41,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import com.example.happibee.APIs.Location
 import com.example.happibee.APIs.MyAPI
+import com.example.happibee.Data.Database.HappiBeeDatabase
+import com.example.happibee.Data.Model.Apiario
+import com.example.happibee.Data.Model.Apicultor
 import com.example.happibee.Presentation.Navigation.AppNavigation
 import com.example.happibee.ui.theme.HappiBeeTheme
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -65,6 +70,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             HappiBeeTheme {
                 navController = rememberNavController()
