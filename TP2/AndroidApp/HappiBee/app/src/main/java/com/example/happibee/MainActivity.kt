@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.TextStyle
@@ -48,6 +49,7 @@ import com.example.happibee.Data.Database.HappiBeeDatabase
 import com.example.happibee.Data.Model.Apiario
 import com.example.happibee.Data.Model.Apicultor
 import com.example.happibee.Presentation.Navigation.AppNavigation
+import com.example.happibee.Presentation.Navigation.Screens
 import com.example.happibee.ui.theme.HappiBeeTheme
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
@@ -159,7 +161,12 @@ fun Abelhas(modifier: Modifier = Modifier) {
 fun Rectangle3348(modifier: Modifier = Modifier, navController: NavController) {
     Column (
         modifier = modifier
-            .background(color = Color(0xfff8b618))
+            .background(brush = Brush.verticalGradient(
+                colors = listOf(
+                    Color(243, 154, 0, 255),
+                    Color(243, 211, 104, 255)
+                )
+            ))
             .fillMaxSize()
             .padding(24.dp)
     ) {
@@ -209,7 +216,7 @@ fun Rectangle3348(modifier: Modifier = Modifier, navController: NavController) {
                         .clip(shape = RoundedCornerShape(37.dp))
                         .background(color = Color.Black.copy(alpha = 0.27f))
                         .clickable {
-                            navController.navigate("DeclararActivity")
+                            navController.navigate(Screens.HomeScreen.route)
                         }
                 )
             Card(
@@ -252,7 +259,7 @@ fun Rectangle3348(modifier: Modifier = Modifier, navController: NavController) {
                     .clip(shape = RoundedCornerShape(37.dp))
                     .background(color = Color.Black.copy(alpha = 0.27f))
                     .clickable {
-                        navController.navigate("DeclararActivity")
+                        navController.navigate(Screens.HomeScreen.route)
                     }
             )
         }
@@ -314,7 +321,7 @@ fun Rectangle3348(modifier: Modifier = Modifier, navController: NavController) {
                     .clip(shape = RoundedCornerShape(37.dp))
                     .background(color = Color.Black.copy(alpha = 0.27f))
                     .clickable {
-                        navController.navigate("DeclararActivity")
+                        navController.navigate(Screens.HomeScreen.route)
                     }
             )
             Card(
@@ -357,7 +364,7 @@ fun Rectangle3348(modifier: Modifier = Modifier, navController: NavController) {
                     .clip(shape = RoundedCornerShape(37.dp))
                     .background(color = Color.Black.copy(alpha = 0.27f))
                     .clickable {
-                        navController.navigate("DeclararActivity")
+                        navController.navigate(Screens.HomeScreen.route)
                     }
             )
         }
@@ -423,7 +430,7 @@ fun Rectangle3348(modifier: Modifier = Modifier, navController: NavController) {
                     .clip(shape = RoundedCornerShape(37.dp))
                     .background(color = Color.Black.copy(alpha = 0.27f))
                     .clickable {
-                        navController.navigate("DeclararActivity")
+                        navController.navigate(Screens.HomeScreen.route)
                     }
             )
         }

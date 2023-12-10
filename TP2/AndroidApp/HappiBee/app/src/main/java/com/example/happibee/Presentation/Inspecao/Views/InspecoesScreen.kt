@@ -1,11 +1,13 @@
 package com.example.happibee.Presentation.Inspecao.Views
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,10 +25,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -55,16 +59,27 @@ fun InspecoesScreen(navController: NavHostController, viewModel: InspecoesViewMo
                     }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Voltar")
                     }
-                }
+                },
+                colors = TopAppBarDefaults.smallTopAppBarColors(Color(0xb3b7bfff))
             )
         }
     ) {
-        LazyColumn(modifier = Modifier.padding(it)) {
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()
+            .background(brush = Brush.verticalGradient(
+                colors = listOf(
+                    Color(243, 154, 0, 255),
+                    Color(243, 211, 104, 255)
+                )
+            ))
+            .padding(it)
+        ) {
             items(inspecoes.value) {
                 Box(
                     modifier = Modifier
                         .padding(16.dp)
                         .border(1.dp, color = Color.Gray)
+                        .background(Color.Black.copy(alpha = 0.15f))
                 ) {
                     Column(modifier = Modifier.padding(20.dp)) {
                         Row(

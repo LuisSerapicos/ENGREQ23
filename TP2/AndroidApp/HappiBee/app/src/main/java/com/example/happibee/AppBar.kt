@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.example.happibee.Presentation.Navigation.Screens
 import kotlinx.coroutines.launch
 
 data class NavigationItem(
@@ -108,7 +109,7 @@ fun AppBar() {
                                 scope.launch {
                                     drawerState.close()
                                 }
-                                navController.navigate("DeclararActivity")
+                                navController.navigate(Screens.HomeScreen.route)
                             },
                             icon = {
                                 Icon(
