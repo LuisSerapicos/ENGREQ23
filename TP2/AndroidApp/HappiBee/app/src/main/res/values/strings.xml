@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HappiBee</string>
+
+    <string name="mapbox_access_token" translatable="false">sk.eyJ1IjoibHNlcmFwaWNvcyIsImEiOiJjbHB4dDV0YjIwcTdpMmlvMmZzYWJnMTVpIn0.HphHrSlQEbAIEaU4A5c44A</string>
 </resources>
