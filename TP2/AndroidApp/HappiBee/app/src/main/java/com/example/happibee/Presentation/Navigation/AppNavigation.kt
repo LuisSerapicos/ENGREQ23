@@ -78,4 +78,10 @@ sealed class Screens(val route:String){
         fun getApiarioById(id:Int)="addInspecao/$id"
     }
     data object DefaultPreview:Screens("defaultPreview")
+    data object ColmeiaScreen:Screens("colmeia/{id}") {
+        fun getColmeiaByApiario(id:Int)="colmeia/$id"
+    }
+    data object AddColmeiaScreen:Screens("addColmeia/{id}"){
+        fun getColmeiaById(id:Int)="addColmeia/$id"
+    }
 }

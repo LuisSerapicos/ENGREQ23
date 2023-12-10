@@ -127,12 +127,12 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                 actions = {
                     Button(
                         onClick = {
-                        showMessage(
-                            context,
-                            message = "Declaração Anual Enviada!"
-                        )
-                        viewModel.getDeclaracao()
-                    },
+                            showMessage(
+                                context,
+                                message = "Declaração Anual Enviada!"
+                            )
+                            viewModel.getDeclaracao()
+                        },
                         colors = ButtonDefaults.buttonColors(Color(0, 19, 33, 122))
                     ) {
                         Text(text = "Declaração Anual")
@@ -158,7 +158,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             navController.navigate(item.route)
                         },
                         label = {
-                                Text(text = item.title)
+                            Text(text = item.title)
                         },
                         icon = {
                             BadgedBox(
@@ -178,15 +178,18 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             }
         }
     ) {
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()
-            .background(brush = Brush.verticalGradient(
-                colors = listOf(
-                    Color(243, 154, 0, 255),
-                    Color(243, 211, 104, 255)
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color(243, 154, 0, 255),
+                            Color(243, 211, 104, 255)
+                        )
+                    )
                 )
-            ))
-            .padding(it)
+                .padding(it)
         ) {
             items(apiarios.value) {
                 Box(
@@ -195,9 +198,10 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                         .border(1.dp, color = Color.Gray)
                         .background(Color.Black.copy(alpha = 0.15f))
                 ) {
-                    Column(modifier = Modifier
-                        .padding(20.dp)
-                    ){
+                    Column(
+                        modifier = Modifier
+                            .padding(20.dp)
+                    ) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
@@ -236,56 +240,85 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 Spacer(modifier = Modifier.weight(1f))
                                 Button(
                                     onClick = {
-                                        navController.navigate(Screens.InspecoesScreen.getInspecaoByApiario(it.id))
+                                        navController.navigate(
+                                            Screens.InspecoesScreen.getInspecaoByApiario(
+                                                it.id
+                                            )
+                                        )
                                     },
                                     colors = ButtonDefaults.buttonColors(Color(25, 33, 15, 125))
                                 ) {
                                     Text(text = "Ver Inspeções")
                                 }
+                                Text(text = it1, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                                Spacer(modifier = Modifier.weight(1f))
+                                Surface(onClick = {
+                                    navController.navigate(
+                                        Screens.InspecoesScreen.getInspecaoByApiario(
+                                            it.id
+                                        )
+                                    )
+                                }) {
+                                    Text(text = "Ver Apiário")
+                                }
                             }
+                            Spacer(modifier = Modifier.height(4.dp))
+                            it.name?.let { it1 ->
+                                Text(text = it1, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                                Spacer(modifier = Modifier.weight(1f))
+                                Surface(onClick = {
+                                    navController.navigate(
+                                        Screens.InspecoesScreen.getInspecaoByApiario(
+                                            it.id
+                                        )
+                                    )
+                                }) {
+                                    Text(text = "Ver Inspeções")
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(text = it.location)
                         }
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = it.location)
                     }
                 }
-            }
 
+            }
         }
     }
-}
 
 
-@Composable
-fun CommonDialog(
-    title: String?,
-    state: MutableState<Boolean>,
-    content: @Composable (() -> Unit)? = null
-) {
-    AlertDialog(
-        onDismissRequest = {
-            state.value = false
-        },
-        title = title?.let {
-            {
-                Column(
-                    Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(text = title)
-                    Divider(modifier = Modifier.padding(bottom = 8.dp))
+    @Composable
+    fun CommonDialog(
+        title: String?,
+        state: MutableState<Boolean>,
+        content: @Composable (() -> Unit)? = null
+    ) {
+        AlertDialog(
+            onDismissRequest = {
+                state.value = false
+            },
+            title = title?.let {
+                {
+                    Column(
+                        Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(text = title)
+                        Divider(modifier = Modifier.padding(bottom = 8.dp))
+                    }
                 }
-            }
-        },
-        text = content,
-        dismissButton = {
-            Button(onClick = { state.value = false }) {
-                Text("Cancel")
-            }
-        },
-        confirmButton = {
-            Button(onClick = { state.value = false }) {
-                Text("Ok")
-            }
-        }, modifier = Modifier.padding(vertical = 8.dp)
-    )
+            },
+            text = content,
+            dismissButton = {
+                Button(onClick = { state.value = false }) {
+                    Text("Cancel")
+                }
+            },
+            confirmButton = {
+                Button(onClick = { state.value = false }) {
+                    Text("Ok")
+                }
+            }, modifier = Modifier.padding(vertical = 8.dp)
+        )
+    }
 }
