@@ -8,6 +8,7 @@ import com.example.happibee.Data.Repository.Apicultor.ApicultorRepositoryImpl
 import com.example.happibee.Data.UseCases.Apiario.ApiarioUseCase
 import com.example.happibee.Data.UseCases.Apiario.DeleteApiario
 import com.example.happibee.Data.UseCases.Apiario.GetApiarios
+import com.example.happibee.Data.UseCases.Apiario.GetByApicultorId
 import com.example.happibee.Data.UseCases.Apiario.GetByIdApiario
 import com.example.happibee.Data.UseCases.Apiario.InsertApiario
 import com.example.happibee.Data.UseCases.Apiario.UpdateApiario
@@ -16,6 +17,7 @@ import com.example.happibee.Data.UseCases.Apicultor.GetApiariosByIdApicultor
 import com.example.happibee.Data.UseCases.Apicultor.GetApicultors
 import com.example.happibee.Data.UseCases.Apicultor.GetByIdApicultor
 import com.example.happibee.Data.UseCases.Apicultor.InsertApicultor
+import com.example.happibee.Data.UseCases.Apicultor.LoginUseCase
 import com.example.happibee.Data.UseCases.Apicultor.UpdateApicultor
 import dagger.Module
 import dagger.Provides
@@ -45,7 +47,8 @@ object HappiBeeModule {
         insertApiario = InsertApiario(repository),
         deleteApiario = DeleteApiario(repository),
         updateApiario = UpdateApiario(repository),
-        getByIdApiario = GetByIdApiario(repository)
+        getByIdApiario = GetByIdApiario(repository),
+        getByApicultorId = GetByApicultorId(repository)
     )
 
     @Provides
@@ -54,6 +57,7 @@ object HappiBeeModule {
         insertApicultor = InsertApicultor(repository),
         updateApicultor = UpdateApicultor(repository),
         getByIdApicultor = GetByIdApicultor(repository),
-        getApiariosByIdApicultor = GetApiariosByIdApicultor(repository)
+        getApiariosByIdApicultor = GetApiariosByIdApicultor(repository),
+        login = LoginUseCase(repository)
     )
 }

@@ -20,4 +20,6 @@ interface ApiarioRepository {
     fun getApiarios(): Flow<List<Apiario>>
     @Query("select * from apiario where id=:id")
     suspend fun getByIdApiario(id:Int):Apiario
+    @Query("select * from apiario where apicultorId=:id")
+    fun getByApicultorId(id:Int):Flow<List<Apiario>>
 }

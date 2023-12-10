@@ -1,5 +1,6 @@
 package com.example.happibee.Presentation.Apiarios.ViewModel
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,9 +11,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.happibee.APIs.Location
 import com.example.happibee.APIs.MyAPI
 import com.example.happibee.Data.Model.Apiario
+import com.example.happibee.Data.PreferencesDataStore.DataStoreManager
 import com.example.happibee.Data.UseCases.Apiario.ApiarioUseCase
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -29,7 +32,9 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 @HiltViewModel
-class AddViewModel @Inject constructor(private val useCase: ApiarioUseCase): ViewModel() {
+class AddViewModel @Inject constructor(private val useCase: ApiarioUseCase,
+                                       @ApplicationContext private val context: Context):
+    ViewModel() {
 
     var name by mutableStateOf("")
     var location by mutableStateOf("")
@@ -38,9 +43,12 @@ class AddViewModel @Inject constructor(private val useCase: ApiarioUseCase): Vie
     private val BASE_URL = "http://10.0.2.2:9000/"
     private val TAG: String = "CHECK_RESPONSE"
 
+    val dataStoreManager = DataStoreManager.getInstance(context)
+
 
     fun addNote()=viewModelScope.launch {
-        useCase.insertApiario(Apiario(name = name, location = location))
+        val apicultorId = dataStoreManager.getName()
+        useCase.insertApiario(Apiario(name = name, location = location, apicultorId = apicultorId.toInt()))
     }
 
     //API method to get comments

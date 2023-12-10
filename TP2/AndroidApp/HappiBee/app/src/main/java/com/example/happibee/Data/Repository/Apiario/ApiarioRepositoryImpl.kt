@@ -13,5 +13,6 @@ class ApiarioRepositoryImpl @Inject constructor (private val dao: ApiarioReposit
     override fun getApiarios(): Flow<List<Apiario>> = dao.getApiarios()
 
     override suspend fun getByIdApiario(id: Int): Apiario = dao.getByIdApiario(id)
+    override fun getByApicultorId(id: Int): Flow<List<Apiario>> = dao.getByApicultorId(id)
 
 }

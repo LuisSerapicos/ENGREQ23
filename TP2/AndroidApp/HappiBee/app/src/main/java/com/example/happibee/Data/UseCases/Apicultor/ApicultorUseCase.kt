@@ -5,5 +5,6 @@ data class ApicultorUseCase (
     val insertApicultor: InsertApicultor,
     val updateApicultor: UpdateApicultor,
     val getByIdApicultor: GetByIdApicultor,
-    val getApiariosByIdApicultor: GetApiariosByIdApicultor
+    val getApiariosByIdApicultor: GetApiariosByIdApicultor,
+    val login: LoginUseCase
 )

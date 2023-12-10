@@ -24,4 +24,6 @@ interface ApicultorRepository {
     @Transaction
     @Query("select * from apicultor where id = :id")
     suspend fun getApicultorWithApiarios(id: Int): ApicultorWithApiarios
+    @Query("select * from apicultor where name = :name AND password = :password")
+    fun login(name: String, password: String): Apicultor?
 }

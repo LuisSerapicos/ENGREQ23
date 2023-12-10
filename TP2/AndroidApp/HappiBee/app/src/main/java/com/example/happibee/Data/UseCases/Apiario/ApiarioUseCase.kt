@@ -5,5 +5,6 @@ data class ApiarioUseCase (
     val insertApiario: InsertApiario,
     val deleteApiario: DeleteApiario,
     val updateApiario: UpdateApiario,
-    val getByIdApiario: GetByIdApiario
+    val getByIdApiario: GetByIdApiario,
+    val getByApicultorId: GetByApicultorId
 )

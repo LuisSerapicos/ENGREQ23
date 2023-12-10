@@ -11,12 +11,13 @@ import com.example.happibee.DefaultPreview
 import com.example.happibee.Presentation.Apiarios.Views.AddScreen
 import com.example.happibee.Presentation.Apiarios.Views.HomeScreen
 import com.example.happibee.Presentation.Apiarios.Views.UpdateScreen
+import com.example.happibee.Presentation.Apicultor.Views.Login
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
     NavHost(
-        navController =navController
-        , startDestination = Screens.HomeScreen.route
+        navController = navController,
+        startDestination = Screens.Login.route
     ){
         composable(route = "MainActivity"){
             DefaultPreview(navController)
@@ -26,6 +27,9 @@ fun AppNavigation(navController: NavHostController) {
         }
         composable(route = Screens.AddScreen.route){
             AddScreen(navController)
+        }
+        composable(route = Screens.Login.route){
+            Login(navController)
         }
         composable(
             route = Screens.UpdateScreen.route, arguments = listOf(
@@ -45,4 +49,5 @@ sealed class Screens(val route:String){
     data object UpdateScreen:Screens("update/{id}"){
         fun getById(id:Int)="update/$id"
     }
+    data object Login:Screens("login")
 }
