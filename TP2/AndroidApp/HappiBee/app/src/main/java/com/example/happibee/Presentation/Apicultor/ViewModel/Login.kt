@@ -30,12 +30,12 @@ class Login @Inject constructor(
     var name by mutableStateOf("")
     var password by mutableStateOf("")
     val dataStoreManager = DataStoreManager.getInstance(context)
+
     suspend fun login() = CoroutineScope(Dispatchers.IO).async {
         var userLoggedIn: Apicultor?
         userLoggedIn = useCase.login(name = name, password = password)
         var userLoggedId = userLoggedIn?.id
         Log.d("CHECK LOGIN", userLoggedId.toString())
         dataStoreManager.saveName(userLoggedId.toString())
-
     }.await()
 }

@@ -33,6 +33,9 @@ fun AppNavigation(navController: NavHostController) {
         composable(route = Screens.Login.route){
             Login(navController)
         }
+        composable(route = Screens.DefaultPreview.route){
+            DefaultPreview(navController)
+        }
         composable(
             route = Screens.UpdateScreen.route, arguments = listOf(
                 navArgument("id"){
@@ -74,4 +77,5 @@ sealed class Screens(val route:String){
     data object AddInspecaoScreen:Screens("addInspecao/{id}"){
         fun getApiarioById(id:Int)="addInspecao/$id"
     }
+    data object DefaultPreview:Screens("defaultPreview")
 }

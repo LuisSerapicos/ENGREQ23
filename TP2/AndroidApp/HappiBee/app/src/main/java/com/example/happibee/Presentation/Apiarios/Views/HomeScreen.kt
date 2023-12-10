@@ -4,6 +4,7 @@ import android.content.Context
 import android.security.ConfirmationPrompt
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,24 +26,41 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,6 +71,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.happibee.Presentation.Navigation.Screens
 import com.example.happibee.Presentation.Apiarios.ViewModel.HomeViewModel
+import com.mapbox.maps.extension.style.expressions.dsl.generated.rgba
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -61,11 +80,44 @@ fun showMessage(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
+data class BottomNavigationItem(
+    val title: String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
+    val hasNews: Boolean,
+    val route: String
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
     val apiarios = viewModel.filteredApiarios.collectAsState(initial = emptyList())
     val context = LocalContext.current
+
+    val items = listOf(
+        BottomNavigationItem(
+            title = "Logout",
+            selectedIcon = Icons.Filled.ArrowBack,
+            unselectedIcon = Icons.Filled.ArrowBack,
+            hasNews = false,
+            route = Screens.Login.route
+        ),
+        BottomNavigationItem(
+            title = "Home",
+            selectedIcon = Icons.Filled.Home,
+            unselectedIcon = Icons.Filled.Home,
+            hasNews = false,
+            route = Screens.DefaultPreview.route
+        ),
+        BottomNavigationItem(
+            title = "Definições",
+            selectedIcon = Icons.Filled.Settings,
+            unselectedIcon = Icons.Filled.Settings,
+            hasNews = false,
+            route = Screens.DefaultPreview.route
+        )
+    )
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -73,32 +125,79 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                     Text(text = "Meus apiários")
                 },
                 actions = {
-                    Surface(onClick = {
+                    Button(
+                        onClick = {
                         showMessage(
                             context,
                             message = "Declaração Anual Enviada!"
                         )
                         viewModel.getDeclaracao()
-                    }) {
+                    },
+                        colors = ButtonDefaults.buttonColors(Color(0, 19, 33, 122))
+                    ) {
                         Text(text = "Declaração Anual")
                     }
-                })
+                },
+                colors = TopAppBarDefaults.smallTopAppBarColors(Color(0xb3b7bfff))
+            )
         }, floatingActionButton = {
-            FloatingActionButton(onClick = {
-                navController.navigate(Screens.AddScreen.route)
-            }) {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(Screens.AddScreen.route)
+                }
+            ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "")
+            }
+        },
+        bottomBar = {
+            NavigationBar {
+                items.forEachIndexed { index, item ->
+                    NavigationBarItem(
+                        selected = false,
+                        onClick = {
+                            navController.navigate(item.route)
+                        },
+                        label = {
+                                Text(text = item.title)
+                        },
+                        icon = {
+                            BadgedBox(
+                                badge = {
+
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = item.selectedIcon,
+                                    contentDescription = " "
+                                )
+                            }
+                        },
+                        colors = NavigationBarItemDefaults.colors(Color(0, 19, 33, 1))
+                    )
+                }
             }
         }
     ) {
-        LazyColumn(modifier = Modifier.padding(it)) {
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()
+            .background(brush = Brush.verticalGradient(
+                colors = listOf(
+                    Color(243, 154, 0, 255),
+                    Color(243, 211, 104, 255)
+                )
+            ))
+            .padding(it)
+        ) {
             items(apiarios.value) {
                 Box(
                     modifier = Modifier
                         .padding(16.dp)
                         .border(1.dp, color = Color.Gray)
+                        .background(Color.Black.copy(alpha = 0.15f))
                 ) {
-                    Column(modifier = Modifier.padding(20.dp)) {
+                    Column(modifier = Modifier
+                        .padding(20.dp)
+                    ){
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
@@ -125,7 +224,6 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             IconButton(onClick = {
                                 viewModel.deleteNote(apiario = it)
                             }) {
-
                                 Icon(
                                     tint = Color.Red.copy(0.5f),
                                     imageVector = Icons.Default.Delete, contentDescription = ""
@@ -133,12 +231,17 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             }
                         }
                         it.name?.let { it1 ->
-                            Text(text = it1, fontWeight = FontWeight.Bold, fontSize = 24.sp)
-                            Spacer(modifier = Modifier.weight(1f))
-                            Surface(onClick = {
-                                navController.navigate(Screens.InspecoesScreen.getInspecaoByApiario(it.id))
-                            }) {
-                                Text(text = "Ver Inspeções")
+                            Row {
+                                Text(text = it1, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                                Spacer(modifier = Modifier.weight(1f))
+                                Button(
+                                    onClick = {
+                                        navController.navigate(Screens.InspecoesScreen.getInspecaoByApiario(it.id))
+                                    },
+                                    colors = ButtonDefaults.buttonColors(Color(25, 33, 15, 125))
+                                ) {
+                                    Text(text = "Ver Inspeções")
+                                }
                             }
                         }
                         Spacer(modifier = Modifier.height(4.dp))

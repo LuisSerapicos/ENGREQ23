@@ -12,15 +12,14 @@ import java.util.Map;
 @RequestMapping("/dgav")
 public class dgavController {
 
+    int apiarioCount = 0;
 
     @PostMapping("/declaracao-anual")
-    public ResponseEntity<Map<String, Object>> declaracaoAnual(@RequestBody ApiarioModel[] apiarioModels) {
+    public ResponseEntity<Map<String, Object>> declaracaoAnual(@RequestBody ApiarioModel apiarioModels) {
         Map<String, Object> response = new HashMap<>();
-        System.out.println("Recebi " + apiarioModels);
-        System.out.println("Recebi " +response);
-        try {
 
-            int apiarioCount = apiarioModels.length;
+        try {
+            apiarioCount ++;
             response.put("message", "As " + apiarioCount + " colmeias foram recebidas com sucesso");
             response.put("value", true);
 
