@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.happibee.Presentation.Apiarios.ViewModel.UpdateViewModel
+import com.example.happibee.Presentation.Navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,12 +31,12 @@ fun UpdateScreen(navController: NavHostController, viewModel: UpdateViewModel = 
     Scaffold(topBar = {
         TopAppBar(
             navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = { navController.popBackStack() /*navController.navigate(Screens.MapBoxScreen.route)*/ }) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "")
                 }
             },
             title = {
-                Text(text = "Editar Apiario")
+                Text(text = "Mover Apiario")
             })
     }) {
         Column(
@@ -46,27 +47,27 @@ fun UpdateScreen(navController: NavHostController, viewModel: UpdateViewModel = 
         ) {
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text(text = "Name") },
-                value = viewModel.name,
+                label = { Text(text = "Latitude") },
+                value = viewModel.latitude,
                 onValueChange = {
-                    viewModel.name = it
+                    viewModel.latitude = it
                 })
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text(text = "Location") },
-                value = viewModel.location,
+                label = { Text(text = "Longitude") },
+                value = viewModel.longitude,
                 onValueChange = {
-                    viewModel.location = it
+                    viewModel.longitude = it
                 })
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    viewModel.updateApiario()
-                    navController.popBackStack()
+                    viewModel.getLocation()
+                    //navController.popBackStack()
                 }) {
-                Text(text = "Editar apiário")
+                Text(text = "Mover")
             }
         }
     }
