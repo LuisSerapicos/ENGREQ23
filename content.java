@@ -59,11 +59,22 @@ public class Cwecpl {
         System.out.println("vunjw");
         System.out.println("mrxiu");
         System.out.println("ctnrc");
-        System.out.println("iwgmg");
-        System.out.println("xlfwg");
-        System.out.println("dnofi");
-        System.out.println("buyav");
-        System.out.println("dbjfp");
-        System.out.println("xnudx");
+        System.out.println("qkrne");
+        System.out.println("lojtl");
+        System.out.println("ipvnr");
+        System.out.println("rpech");
+        System.out.println("ooxeq");
+        System.out.println("dhxae");
+        System.out.println("raphr");
+        System.out.println("iheyu");
+        System.out.println("ilsgv");
+        System.out.println("qlrva");
+        System.out.println("obafe");
+        System.out.println("pnglq");
+        System.out.println("rdxwy");
+        System.out.println("gflvd");
+        System.out.println("geuwg");
+        System.out.println("kuylt");
+        System.out.println("jxnua");
     }
 }
