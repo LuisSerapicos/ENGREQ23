@@ -41,14 +41,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import com.example.happibee.APIs.Location
 import com.example.happibee.APIs.MyAPI
+import com.example.happibee.Data.Database.HappiBeeDatabase
+import com.example.happibee.Data.Model.Apiario
+import com.example.happibee.Data.Model.Apicultor
 import com.example.happibee.Presentation.Navigation.AppNavigation
 import com.example.happibee.ui.theme.HappiBeeTheme
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -65,6 +70,50 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val contexto = this
+        val db = Room.databaseBuilder(
+            contexto,
+            HappiBeeDatabase::class.java,
+            "HappiBeeDB"
+        ).build()
+
+        val apicultorDao = db.apicultorDao()
+        // Obtenha o DAO para a entidade Apiario
+        val apiarioDao = db.apiarioDao()
+
+        runBlocking {
+            apicultorDao
+            apicultorDao.insertApicultor(
+                Apicultor(
+                    name = "Ana",
+                    email = "email",
+                    phone = "123456789",
+                    password = "ana"
+                )
+            )
+
+            apicultorDao
+            apiarioDao.insertApiario(
+                Apiario(
+                    name = "Apiario 1",
+                    location = "Localização 1",
+                    longitude = -8.0,
+                    latitude = 39.0,
+                    apicultorId = 1
+                )
+            )
+            apiarioDao.insertApiario(
+                Apiario(
+                    name = "Apiario 2",
+                    location = "Localização 2",
+                    longitude = -7.0,
+                    latitude = 40.0,
+                    apicultorId = 1
+                )
+            )
+        }
+
         setContent {
             HappiBeeTheme {
                 navController = rememberNavController()

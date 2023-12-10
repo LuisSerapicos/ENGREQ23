@@ -138,6 +138,16 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             Surface(onClick = {
                                 navController.navigate(Screens.InspecoesScreen.getInspecaoByApiario(it.id))
                             }) {
+                                Text(text = "Ver Apiário")
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(4.dp))
+                        it.name?.let { it1 ->
+                            Text(text = it1, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                            Spacer(modifier = Modifier.weight(1f))
+                            Surface(onClick = {
+                                navController.navigate(Screens.InspecoesScreen.getInspecaoByApiario(it.id))
+                            }) {
                                 Text(text = "Ver Inspeções")
                             }
                         }
