@@ -12,6 +12,8 @@ import com.example.happibee.Presentation.Apiarios.Views.AddScreen
 import com.example.happibee.Presentation.Apiarios.Views.HomeScreen
 import com.example.happibee.Presentation.Apiarios.Views.UpdateScreen
 import com.example.happibee.Presentation.Apicultor.Views.Login
+import com.example.happibee.Presentation.Colmeia.Views.AddColmeiaScreen
+import com.example.happibee.Presentation.Colmeia.Views.ColmeiaScreen
 import com.example.happibee.Presentation.Inspecao.Views.AddInspecaoScreen
 import com.example.happibee.Presentation.Inspecao.Views.InspecoesScreen
 
@@ -60,6 +62,24 @@ fun AppNavigation(navController: NavHostController) {
             )
         ){
             AddInspecaoScreen(navController)
+        }
+        composable(
+            route = Screens.ColmeiaScreen.route, arguments = listOf(
+                navArgument("id"){
+                    type = NavType.IntType
+                }
+            )
+        ){
+            ColmeiaScreen(navController)
+        }
+        composable(
+            route = Screens.AddColmeiaScreen.route, arguments = listOf(
+                navArgument("id"){
+                    type = NavType.IntType
+                }
+            )
+        ){
+            AddColmeiaScreen(navController)
         }
     }
 }

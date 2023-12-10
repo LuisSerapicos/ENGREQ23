@@ -11,7 +11,7 @@ import com.example.happibee.Data.Repository.Apiario.Colmeia.ColmeiaRepository
 import com.example.happibee.Data.Repository.Apicultor.ApicultorRepository
 import com.example.happibee.Data.Repository.Inspecao.InspecaoRepository
 
-@Database(entities = [Apiario::class, Colmeia::class, Apicultor::class, Inspecao::class], version = 9, exportSchema = false)
+@Database(entities = [Apiario::class, Colmeia::class, Apicultor::class, Inspecao::class], version = 10, exportSchema = false)
 abstract class HappiBeeDatabase: RoomDatabase(){
     abstract fun apiarioDao(): ApiarioRepository
     abstract fun apicultorDao(): ApicultorRepository

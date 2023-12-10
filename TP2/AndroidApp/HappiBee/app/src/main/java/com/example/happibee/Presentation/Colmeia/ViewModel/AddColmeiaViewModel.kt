@@ -1,5 +1,6 @@
 package com.example.happibee.Presentation.Inspecao.ViewModel
 
+import android.util.Log
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,6 +44,6 @@ class AddColmeiaViewModel @Inject constructor(
     }
 
     fun addColmeia()=viewModelScope.launch {
-        useCase.insertColmeia(Colmeia(nAbelhas.toInt(), nomeColmeia, longitude.toDouble(), latitude.toDouble(), apiarioId = id!!))
+       useCase.insertColmeia(Colmeia(nAbelhas.toInt(), nomeColmeia, longitude.toDouble(), latitude.toDouble(), apiarioId = id!!))
     }
 }

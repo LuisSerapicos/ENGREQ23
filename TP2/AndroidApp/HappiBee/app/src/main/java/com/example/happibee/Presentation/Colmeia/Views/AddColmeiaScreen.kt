@@ -1,7 +1,9 @@
 package com.example.happibee.Presentation.Colmeia.Views
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,6 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -49,6 +53,15 @@ fun AddColmeiaScreen(navController: NavHostController, viewModel: AddColmeiaView
     }) {
         Column(
             modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color(243, 154, 0, 255),
+                            Color(243, 211, 104, 255)
+                        )
+                    )
+                )
                 .padding(it)
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp)
@@ -88,7 +101,7 @@ fun AddColmeiaScreen(navController: NavHostController, viewModel: AddColmeiaView
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
                     viewModel.addColmeia()
-                    navController.popBackStack()
+                    //navController.popBackStack()
                 }) {
                 Text(text = "Adicionar Colmeia")
             }

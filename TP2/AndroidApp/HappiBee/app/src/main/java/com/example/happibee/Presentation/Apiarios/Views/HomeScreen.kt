@@ -4,6 +4,7 @@ import android.content.Context
 import android.security.ConfirmationPrompt
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +29,7 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
@@ -62,15 +64,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.res.ResourcesCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.happibee.Presentation.Navigation.Screens
 import com.example.happibee.Presentation.Apiarios.ViewModel.HomeViewModel
+import com.example.happibee.R
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgba
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -210,6 +215,15 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             Text(text = "#${apiarios.value.indexOf(it) + 1}")
                             Spacer(modifier = Modifier.weight(1f))
                             IconButton(onClick = {
+                                navController.navigate(Screens.AddColmeiaScreen.getColmeiaById(it.id))
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                                    contentDescription = "",
+                                    tint = Color(243, 150, 0, 255)
+                                )
+                            }
+                            IconButton(onClick = {
                                 navController.navigate(Screens.AddInspecaoScreen.getApiarioById(it.id))
                             }) {
                                 Icon(
@@ -250,32 +264,17 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 ) {
                                     Text(text = "Ver Inspeções")
                                 }
-                                Text(text = it1, fontWeight = FontWeight.Bold, fontSize = 24.sp)
-                                Spacer(modifier = Modifier.weight(1f))
-                                Surface(onClick = {
-                                    navController.navigate(
-                                        Screens.InspecoesScreen.getInspecaoByApiario(
-                                            it.id
-                                        )
-                                    )
-                                }) {
-                                    Text(text = "Ver Apiário")
-                                }
                             }
-                            Spacer(modifier = Modifier.height(4.dp))
-                            it.name?.let { it1 ->
-                                Text(text = it1, fontWeight = FontWeight.Bold, fontSize = 24.sp)
-                                Spacer(modifier = Modifier.weight(1f))
-                                Surface(onClick = {
-                                    navController.navigate(
-                                        Screens.InspecoesScreen.getInspecaoByApiario(
-                                            it.id
-                                        )
-                                    )
-                                }) {
-                                    Text(text = "Ver Inspeções")
-                                }
+
+                            Button(onClick = {
+                                navController.navigate(Screens.ColmeiaScreen.getColmeiaByApiario(it.id))
+                            },
+                                colors = ButtonDefaults.buttonColors(Color(25, 33, 15, 125))
+                            ) {
+                                Text(text = "Ver Apiário")
                             }
+
+
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(text = it.location)
                         }
