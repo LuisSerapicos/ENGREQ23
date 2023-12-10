@@ -1,6 +1,7 @@
 package com.isep.engreq.DGAV;
 
 import com.isep.engreq.util.verifyLocation;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,17 +14,24 @@ public class dgavController {
 
 
     @PostMapping("/declaracao-anual")
-    public ResponseEntity<Map<String, String>> declaracaoAnual(@RequestBody ApiarioModel[] apiarioModels) {
+    public ResponseEntity<Map<String, Object>> declaracaoAnual(@RequestBody ApiarioModel[] apiarioModels) {
+        Map<String, Object> response = new HashMap<>();
 
-        int apiarioCount = apiarioModels.length;
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "As " + apiarioCount + " colmeias foram recebidas com sucesso");
-        response.put("status", "success");
+        try {
 
-        return ResponseEntity.ok(response);
+            int apiarioCount = apiarioModels.length;
+            response.put("message", "As " + apiarioCount + " colmeias foram recebidas com sucesso");
+            response.put("value", true);
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            response.put("message", "Erro ao processar a requisição");
+            response.put("value", false);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
-
-
 
 
     @PostMapping("/verify-location")
@@ -31,9 +39,8 @@ public class dgavController {
         double latitude = locationRequest.getLatitude();
         double longitude = locationRequest.getLongitude();
 
-        // 5-second delay
         try {
-            Thread.sleep(5000); // 5000 milliseconds = 5 seconds
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
