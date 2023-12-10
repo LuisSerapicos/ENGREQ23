@@ -71,49 +71,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val contexto = this
-        val db = Room.databaseBuilder(
-            contexto,
-            HappiBeeDatabase::class.java,
-            "HappiBeeDB"
-        ).build()
-
-        val apicultorDao = db.apicultorDao()
-        // Obtenha o DAO para a entidade Apiario
-        val apiarioDao = db.apiarioDao()
-
-        runBlocking {
-            apicultorDao
-            apicultorDao.insertApicultor(
-                Apicultor(
-                    name = "Ana",
-                    email = "email",
-                    phone = "123456789",
-                    password = "ana"
-                )
-            )
-
-            apicultorDao
-            apiarioDao.insertApiario(
-                Apiario(
-                    name = "Apiario 1",
-                    location = "Localização 1",
-                    longitude = -8.0,
-                    latitude = 39.0,
-                    apicultorId = 1
-                )
-            )
-            apiarioDao.insertApiario(
-                Apiario(
-                    name = "Apiario 2",
-                    location = "Localização 2",
-                    longitude = -7.0,
-                    latitude = 40.0,
-                    apicultorId = 1
-                )
-            )
-        }
-
         setContent {
             HappiBeeTheme {
                 navController = rememberNavController()
