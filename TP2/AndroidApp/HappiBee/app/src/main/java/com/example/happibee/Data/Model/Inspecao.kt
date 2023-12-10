@@ -8,7 +8,7 @@ import java.util.Date
 data class Inspecao (
     val date: String,
     val observations: String,
-    val apiarioId: Int? = 1,
+    val apiarioId: Int,
     val apicultorId: Int? = 1,
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 )

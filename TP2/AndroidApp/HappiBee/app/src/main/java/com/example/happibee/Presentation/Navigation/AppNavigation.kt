@@ -12,6 +12,8 @@ import com.example.happibee.Presentation.Apiarios.Views.AddScreen
 import com.example.happibee.Presentation.Apiarios.Views.HomeScreen
 import com.example.happibee.Presentation.Apiarios.Views.UpdateScreen
 import com.example.happibee.Presentation.Apicultor.Views.Login
+import com.example.happibee.Presentation.Inspecao.Views.AddInspecaoScreen
+import com.example.happibee.Presentation.Inspecao.Views.InspecoesScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
@@ -40,6 +42,22 @@ fun AppNavigation(navController: NavHostController) {
         ){
             UpdateScreen(navController)
         }
+        composable(route = Screens.InspecoesScreen.route, arguments = listOf(
+            navArgument("id") {
+                type = NavType.IntType
+            }
+        )){
+            InspecoesScreen(navController)
+        }
+        composable(
+            route = Screens.AddInspecaoScreen.route, arguments = listOf(
+                navArgument("id"){
+                    type = NavType.IntType
+                }
+            )
+        ){
+            AddInspecaoScreen(navController)
+        }
     }
 }
 
@@ -50,4 +68,10 @@ sealed class Screens(val route:String){
         fun getById(id:Int)="update/$id"
     }
     data object Login:Screens("login")
+    data object InspecoesScreen:Screens("inspecoes/{id}") {
+        fun getInspecaoByApiario(id:Int)="inspecoes/$id"
+    }
+    data object AddInspecaoScreen:Screens("addInspecao/{id}"){
+        fun getApiarioById(id:Int)="addInspecao/$id"
+    }
 }

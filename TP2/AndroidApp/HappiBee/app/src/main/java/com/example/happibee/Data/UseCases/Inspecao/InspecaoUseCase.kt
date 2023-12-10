@@ -4,5 +4,6 @@ data class InspecaoUseCase (
     val getInspecoes: GetInspecoes,
     val insertInspecao: InsertInspecao,
     val updateInspecao: UpdateInspecao,
-    val getByIdInspecao: GetByIdInspecao
+    val getByIdInspecao: GetByIdInspecao,
+    val getInspecaoByApiario: GetInspecaoByApiario
 )

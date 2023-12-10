@@ -57,12 +57,12 @@ class UpdateViewModel @Inject constructor(
     }
 
     fun updateApiario()=viewModelScope.launch {
-        useCase.updateApiario(Apiario(id!!, name, location, longitude, latitude))
+        useCase.updateApiario(Apiario(id!!, name, location, longitude.toDouble(), latitude.toDouble()))
     }
 
     //API method to get comments
     fun getLocation() {
-        val requestBody = Location(latitude, longitude)
+        val requestBody = Location(latitude.toDouble(), longitude.toDouble())
 
         viewModelScope.launch {
             try {
@@ -73,13 +73,13 @@ class UpdateViewModel @Inject constructor(
 
                 // Access properties dynamically
                 val string1 = result.get("message")?.asString
-                val string2 = result.get("insidePortugal")?.asString
+                val string2 = result.get("value").asBoolean
 
                 Log.i(TAG, "String 1: $string1")
                 Log.i(TAG, "String 2: $string2")
 
-                if (string2.equals("true")) {
-                    Log.i(TAG, "Added apiario!")
+                if (string2) {
+                    Log.i(TAG, "Apiário movido!")
                     updateApiario()
                 }
                 else {

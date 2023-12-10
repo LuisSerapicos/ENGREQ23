@@ -33,6 +33,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -95,4 +96,12 @@ dependencies {
 
     //Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    //MapBox
+    implementation("com.mapbox.maps:android:11.0.0-beta.1")
+    implementation("com.mapbox.extension:maps-compose:0.1.0")
+
+    //DateTimePicker
+    implementation("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.6")
 }

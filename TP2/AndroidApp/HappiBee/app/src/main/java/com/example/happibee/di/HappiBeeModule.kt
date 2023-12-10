@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.happibee.Data.Database.HappiBeeDatabase
 import com.example.happibee.Data.Repository.Apiario.ApiarioRepositoryImpl
 import com.example.happibee.Data.Repository.Apicultor.ApicultorRepositoryImpl
+import com.example.happibee.Data.Repository.Inspecao.InspecaoRepositoryImpl
 import com.example.happibee.Data.UseCases.Apiario.ApiarioUseCase
 import com.example.happibee.Data.UseCases.Apiario.DeleteApiario
 import com.example.happibee.Data.UseCases.Apiario.GetApiarios
@@ -19,11 +20,18 @@ import com.example.happibee.Data.UseCases.Apicultor.GetByIdApicultor
 import com.example.happibee.Data.UseCases.Apicultor.InsertApicultor
 import com.example.happibee.Data.UseCases.Apicultor.LoginUseCase
 import com.example.happibee.Data.UseCases.Apicultor.UpdateApicultor
+import com.example.happibee.Data.UseCases.Inspecao.GetByIdInspecao
+import com.example.happibee.Data.UseCases.Inspecao.GetInspecaoByApiario
+import com.example.happibee.Data.UseCases.Inspecao.GetInspecoes
+import com.example.happibee.Data.UseCases.Inspecao.InsertInspecao
+import com.example.happibee.Data.UseCases.Inspecao.InspecaoUseCase
+import com.example.happibee.Data.UseCases.Inspecao.UpdateInspecao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.http.GET
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -40,6 +48,8 @@ object HappiBeeModule {
     fun provideApiarioDao(dao: HappiBeeDatabase) = dao.apiarioDao()
     @Provides
     fun provideApicultorDao(dao: HappiBeeDatabase) = dao.apicultorDao()
+    @Provides
+    fun provideInspecaoDao(dao: HappiBeeDatabase) = dao.inspecaoDao()
 
     @Provides
     fun provideApiarioUseCase(repository: ApiarioRepositoryImpl) = ApiarioUseCase(
@@ -59,5 +69,14 @@ object HappiBeeModule {
         getByIdApicultor = GetByIdApicultor(repository),
         getApiariosByIdApicultor = GetApiariosByIdApicultor(repository),
         login = LoginUseCase(repository)
+    )
+
+    @Provides
+    fun provideInspecaoUseCase(repository: InspecaoRepositoryImpl) = InspecaoUseCase(
+        getInspecoes = GetInspecoes(repository),
+        insertInspecao = InsertInspecao(repository),
+        updateInspecao = UpdateInspecao(repository),
+        getByIdInspecao = GetByIdInspecao(repository),
+        getInspecaoByApiario = GetInspecaoByApiario(repository)
     )
 }

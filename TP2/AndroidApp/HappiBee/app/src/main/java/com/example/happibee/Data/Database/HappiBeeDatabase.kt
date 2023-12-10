@@ -9,7 +9,7 @@ import com.example.happibee.Data.Repository.Apiario.ApiarioRepository
 import com.example.happibee.Data.Repository.Apicultor.ApicultorRepository
 import com.example.happibee.Data.Repository.Inspecao.InspecaoRepository
 
-@Database(entities = [Apiario::class, Apicultor::class, Inspecao::class], version = 7, exportSchema = false)
+@Database(entities = [Apiario::class, Apicultor::class, Inspecao::class], version = 9, exportSchema = false)
 abstract class HappiBeeDatabase: RoomDatabase(){
     abstract fun apiarioDao(): ApiarioRepository
     abstract fun apicultorDao(): ApicultorRepository

@@ -41,7 +41,7 @@ import com.example.happibee.Presentation.Navigation.Screens
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InspecoesScreen(navController: NavHostController, viewModel: InspecoesViewModel = hiltViewModel()) {
-    val apiarios = viewModel.inspecoes.collectAsState(initial = emptyList())
+    val inspecoes = viewModel.inspecoesApiario.collectAsState(initial = emptyList())
     val context = LocalContext.current
     Scaffold(
         topBar = {
@@ -60,7 +60,7 @@ fun InspecoesScreen(navController: NavHostController, viewModel: InspecoesViewMo
         }
     ) {
         LazyColumn(modifier = Modifier.padding(it)) {
-            items(apiarios.value) {
+            items(inspecoes.value) {
                 Box(
                     modifier = Modifier
                         .padding(16.dp)
@@ -72,7 +72,7 @@ fun InspecoesScreen(navController: NavHostController, viewModel: InspecoesViewMo
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
-                            Text(text = "#${apiarios.value.indexOf(it) + 1}")
+                            Text(text = "#${inspecoes.value.indexOf(it) + 1}")
                         }
                         Text(text = it.date, fontWeight = FontWeight.Bold, fontSize = 24.sp)
                         Spacer(modifier = Modifier.height(4.dp))

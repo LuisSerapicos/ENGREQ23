@@ -49,6 +49,6 @@ class AddInspecaoViewModel @Inject constructor(
     }
 
     fun addInspecao()=viewModelScope.launch {
-        useCase.insertInspecao(Inspecao(date, observations, apiarioId = id))
+        useCase.insertInspecao(Inspecao(date, observations, apiarioId = id!!))
     }
 }

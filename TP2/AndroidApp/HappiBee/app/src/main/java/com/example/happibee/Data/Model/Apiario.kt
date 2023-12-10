@@ -8,7 +8,7 @@ data class Apiario(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String?,
     val location: String,
-    val longitude: String? = "37.85",
-    val latitude: String? = "-7.26",
+    val longitude: Double? = 37.85,
+    val latitude: Double? = -7.26,
     val apicultorId: Int? = 1
 )

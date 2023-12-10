@@ -20,4 +20,6 @@ interface InspecaoRepository {
     fun getInspecoes(): Flow<List<Inspecao>>
     @Query("select * from inspecao where id=:id")
     suspend fun getByIdInspecao(id:Int): Inspecao
+    @Query("select * from inspecao where apiarioId=:id")
+    fun getInspecaoByApiario(id:Int): Flow<List<Inspecao>>
 }

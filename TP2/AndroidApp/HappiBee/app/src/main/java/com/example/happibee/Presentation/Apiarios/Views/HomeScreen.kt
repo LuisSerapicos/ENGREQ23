@@ -2,6 +2,7 @@ package com.example.happibee.Presentation.Apiarios.Views
 
 import android.content.Context
 import android.security.ConfirmationPrompt
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
@@ -51,6 +53,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.happibee.Presentation.Navigation.Screens
 import com.example.happibee.Presentation.Apiarios.ViewModel.HomeViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 fun showMessage(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -73,6 +78,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             context,
                             message = "Declaração Anual Enviada!"
                         )
+                        viewModel.getDeclaracao()
                     }) {
                         Text(text = "Declaração Anual")
                     }
@@ -101,6 +107,14 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                             Text(text = "#${apiarios.value.indexOf(it) + 1}")
                             Spacer(modifier = Modifier.weight(1f))
                             IconButton(onClick = {
+                                navController.navigate(Screens.AddInspecaoScreen.getApiarioById(it.id))
+                            }) {
+                                Icon(
+                                    tint = Color.Blue.copy(0.5f),
+                                    imageVector = Icons.Default.DateRange, contentDescription = ""
+                                )
+                            }
+                            IconButton(onClick = {
                                 navController.navigate(Screens.UpdateScreen.getById(it.id))
                             }) {
                                 Icon(
@@ -118,7 +132,15 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 )
                             }
                         }
-                        Text(text = it.name, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                        it.name?.let { it1 ->
+                            Text(text = it1, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                            Spacer(modifier = Modifier.weight(1f))
+                            Surface(onClick = {
+                                navController.navigate(Screens.InspecoesScreen.getInspecaoByApiario(it.id))
+                            }) {
+                                Text(text = "Ver Inspeções")
+                            }
+                        }
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(text = it.location)
                     }

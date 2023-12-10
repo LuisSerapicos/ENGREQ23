@@ -64,9 +64,9 @@ fun AddScreen(navController: NavHostController, viewModel: AddViewModel = hiltVi
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = "Latitude") },
-                value = viewModel.latitutde,
+                value = viewModel.latitude,
                 onValueChange = {
-                    viewModel.latitutde = it
+                    viewModel.latitude = it
                 })
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),

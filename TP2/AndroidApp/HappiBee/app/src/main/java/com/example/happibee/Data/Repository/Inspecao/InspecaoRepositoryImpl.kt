@@ -14,4 +14,5 @@ class InspecaoRepositoryImpl @Inject constructor (private val dao: InspecaoRepos
     override fun getInspecoes(): Flow<List<Inspecao>> = dao.getInspecoes()
 
     override suspend fun getByIdInspecao(id: Int): Inspecao = dao.getByIdInspecao(id)
+    override fun getInspecaoByApiario(id: Int): Flow<List<Inspecao>> = dao.getInspecaoByApiario(id)
 }

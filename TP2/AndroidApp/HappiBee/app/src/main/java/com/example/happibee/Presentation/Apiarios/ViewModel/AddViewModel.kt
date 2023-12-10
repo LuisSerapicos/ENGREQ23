@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.example.happibee.APIs.Location
 import com.example.happibee.APIs.MyAPI
@@ -38,6 +37,8 @@ class AddViewModel @Inject constructor(private val useCase: ApiarioUseCase,
 
     var name by mutableStateOf("")
     var location by mutableStateOf("")
+    var latitude by mutableStateOf("")
+    var longitude by mutableStateOf("")
 
     //API URL
     private val BASE_URL = "http://10.0.2.2:9000/"
@@ -48,12 +49,12 @@ class AddViewModel @Inject constructor(private val useCase: ApiarioUseCase,
 
     fun addNote()=viewModelScope.launch {
         val apicultorId = dataStoreManager.getName()
-        useCase.insertApiario(Apiario(name = name, location = location, apicultorId = apicultorId.toInt()))
+        useCase.insertApiario(Apiario(name = name, location = location, longitude = longitude.toDouble(), latitude = latitude.toDouble(), apicultorId = apicultorId.toInt()))
     }
 
     //API method to get comments
     fun getLocation() {
-        val requestBody = Location("38.47", "-8.24")
+        val requestBody = Location(latitude.toDouble(), longitude.toDouble())
 
         viewModelScope.launch {
             try {
@@ -64,7 +65,7 @@ class AddViewModel @Inject constructor(private val useCase: ApiarioUseCase,
 
                 // Access properties dynamically
                 val string1 = result.get("message")?.asString
-                val string2 = result.get("insidePortugal")?.asString
+                val string2 = result.get("value")?.asString
 
                 Log.i(TAG, "String 1: $string1")
                 Log.i(TAG, "String 2: $string2")
