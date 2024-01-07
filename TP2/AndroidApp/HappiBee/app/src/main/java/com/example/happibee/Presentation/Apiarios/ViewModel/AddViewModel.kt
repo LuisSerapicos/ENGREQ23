@@ -49,7 +49,6 @@ class AddViewModel @Inject constructor(private val useCase: ApiarioUseCase,
 
     val dataStoreManager = DataStoreManager.getInstance(context)
 
-
     fun addNote()=viewModelScope.launch {
         try {
             val novoApiario = Apiario(
@@ -61,7 +60,7 @@ class AddViewModel @Inject constructor(private val useCase: ApiarioUseCase,
             )
 
             Firebase.firestore.collection("apicultores")
-                .document("apicultor1")
+                .document(dataStoreManager.getName())
                 .collection("apiarios")
                 .document(name)
                 .set(novoApiario)

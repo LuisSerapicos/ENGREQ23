@@ -67,9 +67,10 @@ class HomeViewModel @Inject constructor(
     suspend fun deleteApiario(apiario: Apiario) {
         withContext(Dispatchers.IO) {
             try {
+
                 val apicultorId = "apicultor1"
                 Firebase.firestore.collection("apicultores")
-                    .document(apicultorId)
+                    .document(dataStoreManager.getName())
                     .collection("apiarios")
                     .document(apiario.name.toString())
                     .delete()
@@ -124,7 +125,7 @@ class HomeViewModel @Inject constructor(
             try {
                 val apicultorId = "apicultor1"
                 val querySnapshot = Firebase.firestore.collection("apicultores")
-                    .document(apicultorId)
+                    .document(dataStoreManager.getName())
                     .collection("apiarios")
                     .get()
                     .await()
