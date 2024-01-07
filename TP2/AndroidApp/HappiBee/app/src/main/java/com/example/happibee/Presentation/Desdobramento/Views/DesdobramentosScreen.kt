@@ -1,30 +1,13 @@
-package com.example.happibee.Presentation.Colmeia.Views
+package com.example.happibee.Presentation.Desdobramento.Views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -38,19 +21,18 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.happibee.Presentation.Colmeia.ViewModel.ColmeiasViewModel
-import com.example.happibee.Presentation.Inspecao.ViewModel.InspecoesViewModel
-import com.example.happibee.Presentation.Navigation.Screens
+import com.example.happibee.Presentation.Desdobramento.ViewModel.DesdobramentosViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ColmeiaScreen(navController: NavHostController, viewModel: ColmeiasViewModel = hiltViewModel()) {
+fun DesdobramentosScreen(navController: NavHostController, viewModel: DesdobramentosViewModel = hiltViewModel()) {
     val colmeias = viewModel.colmeiasApiario.collectAsState(initial = emptyList())
     val context = LocalContext.current
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Minhas Colmeias")
+                    Text(text = "Desdobramentos")
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -90,22 +72,6 @@ fun ColmeiaScreen(navController: NavHostController, viewModel: ColmeiasViewModel
                         Text(text = it.nomeColmeia, fontWeight = FontWeight.Bold, fontSize = 24.sp)
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(text = it.nAbelhas.toString() + " Abelhas", fontSize = 16.sp)
-                        IconButton(onClick = {
-                            navController.navigate(Screens.AddDesdobramentos.getDesdobramentobyId(it.id))
-                        }) {
-                            Icon(
-                                tint = Color.Blue.copy(0.5f),
-                                imageVector = Icons.Default.Edit, contentDescription = ""
-                            )
-                        }
-                        IconButton(onClick = {
-                            viewModel.deleteColmeia(colmeia = it)
-                        }) {
-                            Icon(
-                                tint = Color.Red.copy(0.5f),
-                                imageVector = Icons.Default.Delete, contentDescription = ""
-                            )
-                        }
                     }
                 }
             }

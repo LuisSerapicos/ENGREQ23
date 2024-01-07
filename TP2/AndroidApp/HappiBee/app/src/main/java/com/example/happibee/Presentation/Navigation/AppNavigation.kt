@@ -14,6 +14,7 @@ import com.example.happibee.Presentation.Apiarios.Views.UpdateScreen
 import com.example.happibee.Presentation.Apicultor.Views.Login
 import com.example.happibee.Presentation.Colmeia.Views.AddColmeiaScreen
 import com.example.happibee.Presentation.Colmeia.Views.ColmeiaScreen
+import com.example.happibee.Presentation.Desdobramento.Views.AddDesdobramentoScreen
 import com.example.happibee.Presentation.Inspecao.Views.AddInspecaoScreen
 import com.example.happibee.Presentation.Inspecao.Views.InspecoesScreen
 
@@ -81,6 +82,15 @@ fun AppNavigation(navController: NavHostController) {
         ){
             AddColmeiaScreen(navController)
         }
+        composable(
+            route = Screens.AddDesdobramentos.route, arguments = listOf(
+                navArgument("id"){
+                    type = NavType.IntType
+                }
+            )
+        ){
+            AddDesdobramentoScreen(navController)
+        }
     }
 }
 
@@ -104,4 +114,15 @@ sealed class Screens(val route:String){
     data object AddColmeiaScreen:Screens("addColmeia/{id}"){
         fun getColmeiaById(id:Int)="addColmeia/$id"
     }
+
+    data object AddDesdobramentos:Screens("addDesd/{id}"){
+        fun getDesdobramentobyId(id: Int)="addDesd/$id"
+    }
+
+    data object DesdobramentosScreen:Screens("desdobramento/{id}") {
+        fun getDesdobramentos(id: Int) = "desdobramento/$id"
+
+    }
+
+
 }
