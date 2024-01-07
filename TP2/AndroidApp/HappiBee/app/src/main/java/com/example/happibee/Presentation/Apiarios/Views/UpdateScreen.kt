@@ -79,6 +79,7 @@ fun UpdateScreen(navController: NavHostController, viewModel: UpdateViewModel = 
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
+                    //viewModel.updateApiario()
                     viewModel.getLocation()
                     //navController.popBackStack()
                 },

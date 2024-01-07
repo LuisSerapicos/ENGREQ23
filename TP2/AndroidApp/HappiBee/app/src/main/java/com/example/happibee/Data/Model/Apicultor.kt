@@ -10,4 +10,6 @@ data class Apicultor(
     val email: String,
     val phone: String,
     val password: String
-)
+) {
+    constructor() : this(0, "", "", "", "")
+}

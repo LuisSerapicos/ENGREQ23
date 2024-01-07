@@ -94,6 +94,7 @@ fun AddScreen(navController: NavHostController, viewModel: AddViewModel = hiltVi
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
+                    //viewModel.addNote()
                     viewModel.getLocation()
                     //navController.popBackStack()
                 },

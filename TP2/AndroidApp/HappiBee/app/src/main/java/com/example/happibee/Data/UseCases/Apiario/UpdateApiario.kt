@@ -5,5 +5,5 @@ import com.example.happibee.Data.Repository.Apiario.ApiarioRepositoryImpl
 import javax.inject.Inject
 
 class UpdateApiario @Inject constructor(private val repository: ApiarioRepositoryImpl){
-    suspend operator fun invoke(apiario: Apiario) = repository.updateApiario(apiario)
+    //suspend operator fun invoke(apiario: Apiario) = repository.updateApiario(apiario)
 }

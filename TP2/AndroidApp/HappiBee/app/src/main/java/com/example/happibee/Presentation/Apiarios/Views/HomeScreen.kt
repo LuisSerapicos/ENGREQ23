@@ -51,10 +51,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -96,8 +100,16 @@ data class BottomNavigationItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
-    val apiarios = viewModel.filteredApiarios.collectAsState(initial = emptyList())
+    val apiarios by rememberUpdatedState(viewModel.filteredApiarios.collectAsState(initial = emptyList()))
+
     val context = LocalContext.current
+
+    val deleteStatus by remember { viewModel.deleteStatus }.observeAsState(false)
+
+    if (deleteStatus) {
+        showMessage(context, "Apiário excluído com sucesso.")
+        viewModel.resetDeleteStatus()
+    }
 
     val items = listOf(
         BottomNavigationItem(
@@ -240,11 +252,15 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 )
                             }
                             IconButton(onClick = {
-                                viewModel.deleteNote(apiario = it)
+                                viewModel.viewModelScope.launch {
+                                    viewModel.deleteApiario(it)
+                                }
+                                navController.navigate(Screens.HomeScreen.route)
                             }) {
                                 Icon(
                                     tint = Color.Red.copy(0.5f),
-                                    imageVector = Icons.Default.Delete, contentDescription = ""
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = ""
                                 )
                             }
                         }
@@ -284,7 +300,6 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             }
         }
     }
-
 
     @Composable
     fun CommonDialog(
