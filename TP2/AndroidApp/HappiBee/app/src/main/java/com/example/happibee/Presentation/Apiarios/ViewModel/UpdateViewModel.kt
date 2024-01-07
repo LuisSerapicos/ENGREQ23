@@ -11,11 +11,14 @@ import com.example.happibee.APIs.Location
 import com.example.happibee.APIs.MyAPI
 import com.example.happibee.Data.Model.Apiario
 import com.example.happibee.Data.UseCases.Apiario.ApiarioUseCase
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -57,7 +60,21 @@ class UpdateViewModel @Inject constructor(
     }
 
     fun updateApiario()=viewModelScope.launch {
-        useCase.updateApiario(Apiario(id!!, name, location, longitude.toDouble(), latitude.toDouble()))
+        try {
+            Firebase.firestore.collection("apicultores")
+                .document("apicultor1")
+                .collection("apiarios")
+                .document(name)
+                .update(
+                    mapOf(
+                        "latitude" to latitude,
+                        "longitude" to longitude
+                    )
+                )
+                .await()
+        } catch (e: Exception) {
+            Log.e("UPDATE_APIARIO", "Erro ao atualizar apiário: ${e.message}")
+        }
     }
 
     //API method to get comments

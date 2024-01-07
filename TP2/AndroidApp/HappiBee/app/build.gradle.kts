@@ -1,9 +1,10 @@
-plugins {
+ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 
     id ("com.google.devtools.ksp")
     id ("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -64,6 +65,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation ("androidx.navigation:navigation-compose:2.4.0-rc01")
+    implementation("com.google.firebase:firebase-firestore:24.10.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.2.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

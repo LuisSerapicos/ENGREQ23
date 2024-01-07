@@ -2,20 +2,32 @@ package com.example.happibee.Presentation.Apiarios.ViewModel
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.happibee.APIs.MyAPI
 import com.example.happibee.Data.Model.Apiario
 import com.example.happibee.Data.PreferencesDataStore.DataStoreManager
 import com.example.happibee.Data.UseCases.Apiario.ApiarioUseCase
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,28 +46,57 @@ class HomeViewModel @Inject constructor(
     @ApplicationContext private val context: Context // Inject the context
 ) : ViewModel() {
 
-    val apiarios = apiarioCase.getApiarios()
+    private val _apiarios = MutableLiveData<List<Apiario>>()
+    val apiarios: LiveData<List<Apiario>> get() = _apiarios
+
+    val filteredApiarios: Flow<List<Apiario>> = flow {
+        try {
+            emit(fetchApiarios())
+        } catch (e: Exception) {
+            Log.e("GET_APIARIOS", "Erro ao obter apiários: ${e.message}")
+            emit(emptyList<Apiario>())
+        }
+    }
+
+    private val _deleteStatus = MutableLiveData<Boolean>()
+    val deleteStatus: LiveData<Boolean> get() = _deleteStatus
+
     val dataStoreManager = DataStoreManager.getInstance(context)
 
     //API URL
     private val BASE_URL = "http://10.0.2.2:9000/"
     private val TAG: String = "CHECK_RESPONSE"
 
+    /*fun deleteNote(apiario: Apiario) = viewModelScope.launch {
+        apiarioCase.deleteApiario(apiario)
+    }*/
 
-    val filteredApiarios: Flow<List<Apiario>> = apiarios.map { apiariosList ->
-        val apicultorId = dataStoreManager.getName()
-        Log.d("CHECK data", apicultorId)
-        apiariosList.filter { it.apicultorId == apicultorId.toInt() }
+    suspend fun deleteApiario(apiario: Apiario) {
+        withContext(Dispatchers.IO) {
+            try {
+                val apicultorId = "apicultor1"
+                Firebase.firestore.collection("apicultores")
+                    .document(apicultorId)
+                    .collection("apiarios")
+                    .document(apiario.name.toString())
+                    .delete()
+                    .await()
+
+                _deleteStatus.postValue(true)
+            } catch (e: Exception) {
+                Log.e("DELETE_APIARIO", "Erro ao excluir apiário: ${e.message}")
+                _deleteStatus.postValue(false)
+            }
+        }
     }
 
-    fun deleteNote(apiario: Apiario) = viewModelScope.launch {
-        apiarioCase.deleteApiario(apiario)
+    fun resetDeleteStatus() {
+        _deleteStatus.value = false
     }
 
     //API method to get comments
     fun getDeclaracao() {
-        val requestBody = Apiario(1, "", "")
-
+        val requestBody = Apiario(1,"","",1.0,1.0,1)
         viewModelScope.launch {
             try {
                 // Call the suspend function within the coroutine scope
@@ -81,6 +122,31 @@ class HomeViewModel @Inject constructor(
 
             } catch (e: Exception) {
                 Log.i(TAG, "onFailure: ${e.message}")
+            }
+        }
+    }
+
+    suspend fun fetchApiarios(): List<Apiario> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val apicultorId = "apicultor1"
+                val querySnapshot = Firebase.firestore.collection("apicultores")
+                    .document(apicultorId)
+                    .collection("apiarios")
+                    .get()
+                    .await()
+
+                val listaApiarios = mutableListOf<Apiario>()
+                for (document in querySnapshot.documents) {
+                    val apiario = document.toObject(Apiario::class.java)
+                    apiario?.let {
+                        listaApiarios.add(it)
+                    }
+                }
+                listaApiarios
+            } catch (e: Exception) {
+                Log.e("GET_APIARIOS", "Erro ao obter apiários: ${e.message}")
+                emptyList<Apiario>()
             }
         }
     }

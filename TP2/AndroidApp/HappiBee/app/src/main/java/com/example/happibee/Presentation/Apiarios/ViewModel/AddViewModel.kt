@@ -12,12 +12,15 @@ import com.example.happibee.APIs.MyAPI
 import com.example.happibee.Data.Model.Apiario
 import com.example.happibee.Data.PreferencesDataStore.DataStoreManager
 import com.example.happibee.Data.UseCases.Apiario.ApiarioUseCase
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -48,8 +51,24 @@ class AddViewModel @Inject constructor(private val useCase: ApiarioUseCase,
 
 
     fun addNote()=viewModelScope.launch {
-        val apicultorId = dataStoreManager.getName()
-        useCase.insertApiario(Apiario(name = name, location = location, longitude = longitude.toDouble(), latitude = latitude.toDouble(), apicultorId = apicultorId.toInt()))
+        try {
+            val novoApiario = Apiario(
+                name = name,
+                location = location,
+                longitude = longitude.toDouble(),
+                latitude = latitude.toDouble(),
+                apicultorId = 1
+            )
+
+            Firebase.firestore.collection("apicultores")
+                .document("apicultor1")
+                .collection("apiarios")
+                .document(name)
+                .set(novoApiario)
+                .await()
+        } catch (e: Exception) {
+            Log.e("ADD_APIARIO", "Erro ao adicionar apiário: ${e.message}")
+        }
     }
 
     //API method to get comments
