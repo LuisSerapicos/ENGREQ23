@@ -46,9 +46,6 @@ class HomeViewModel @Inject constructor(
     @ApplicationContext private val context: Context // Inject the context
 ) : ViewModel() {
 
-    private val _apiarios = MutableLiveData<List<Apiario>>()
-    val apiarios: LiveData<List<Apiario>> get() = _apiarios
-
     val filteredApiarios: Flow<List<Apiario>> = flow {
         try {
             emit(fetchApiarios())
@@ -66,10 +63,6 @@ class HomeViewModel @Inject constructor(
     //API URL
     private val BASE_URL = "http://10.0.2.2:9000/"
     private val TAG: String = "CHECK_RESPONSE"
-
-    /*fun deleteNote(apiario: Apiario) = viewModelScope.launch {
-        apiarioCase.deleteApiario(apiario)
-    }*/
 
     suspend fun deleteApiario(apiario: Apiario) {
         withContext(Dispatchers.IO) {
