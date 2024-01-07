@@ -11,4 +11,7 @@ data class Colmeia(
     val latitude: Double? = -7.26,
     val apiarioId: Int? = 1,
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-)
+){
+    constructor() : this(null,"", null, null, null)
+
+}

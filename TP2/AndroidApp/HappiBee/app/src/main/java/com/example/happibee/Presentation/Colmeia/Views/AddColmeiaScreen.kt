@@ -101,7 +101,7 @@ fun AddColmeiaScreen(navController: NavHostController, viewModel: AddColmeiaView
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
                     viewModel.addColmeia()
-                    //navController.popBackStack()
+                    navController.popBackStack()
                 }) {
                 Text(text = "Adicionar Colmeia")
             }

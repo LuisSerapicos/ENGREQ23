@@ -13,8 +13,11 @@ import com.example.happibee.Data.Model.Inspecao
 import com.example.happibee.Data.UseCases.Apiario.ApiarioUseCase
 import com.example.happibee.Data.UseCases.Colmeia.ColmeiaUseCase
 import com.example.happibee.Data.UseCases.Inspecao.InspecaoUseCase
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -44,6 +47,26 @@ class AddColmeiaViewModel @Inject constructor(
     }
 
     fun addColmeia()=viewModelScope.launch {
-       useCase.insertColmeia(Colmeia(nAbelhas.toInt(), nomeColmeia, longitude.toDouble(), latitude.toDouble(), apiarioId = id!!))
+       //useCase.insertColmeia(Colmeia(nAbelhas.toInt(), nomeColmeia, longitude.toDouble(), latitude.toDouble(), apiarioId = id!!))
+        try {
+            val novaColmeia = Colmeia(
+                nAbelhas.toInt(),
+                nomeColmeia,
+                longitude.toDouble(),
+                latitude.toDouble(),
+                1
+            )
+
+            Firebase.firestore.collection("apicultores")
+                .document("apicultor1")
+                .collection("apiarios")
+                .document("apiario1")
+                .collection("colmeias")
+                .document(nomeColmeia)
+                .set(novaColmeia)
+                .await()
+        } catch (e: Exception) {
+            Log.e("ADD_COLMEIA", "Erro ao adicionar colmeia: ${e.message}")
+        }
     }
 }
