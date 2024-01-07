@@ -14,11 +14,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.happibee.Presentation.Desdobramento.ViewModel.AddDesdobramentoViewModel
 import com.example.happibee.Presentation.Inspecao.ViewModel.AddColmeiaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddDesdobramentoScreen(navController: NavHostController, viewModel: AddColmeiaViewModel = hiltViewModel()) {
+fun AddDesdobramentoScreen(navController: NavHostController, viewModel: AddDesdobramentoViewModel = hiltViewModel()) {
     Scaffold(topBar = {
         TopAppBar(
             navigationIcon = {
@@ -81,7 +82,7 @@ fun AddDesdobramentoScreen(navController: NavHostController, viewModel: AddColme
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    viewModel.addColmeia()
+                    viewModel.addDesdobramento()
                     //navController.popBackStack()
                 }) {
                 Text(text = "Desdobrar Colmeia")

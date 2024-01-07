@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.happibee.Presentation.Colmeia.ViewModel.ColmeiasViewModel
 import com.example.happibee.Presentation.Desdobramento.ViewModel.DesdobramentosViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,7 +70,7 @@ fun DesdobramentosScreen(navController: NavHostController, viewModel: Desdobrame
                         }
                         Text(text = it.nomeColmeia, fontWeight = FontWeight.Bold, fontSize = 24.sp)
                         Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = it.nAbelhas.toString() + " Abelhas", fontSize = 16.sp)
+                        Text(text = it.nabelhas.toString() + " Abelhas", fontSize = 16.sp)
                     }
                 }
             }

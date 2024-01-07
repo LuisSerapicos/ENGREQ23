@@ -14,12 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -36,10 +34,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.happibee.Presentation.Colmeia.ViewModel.ColmeiasViewModel
-import com.example.happibee.Presentation.Inspecao.ViewModel.InspecoesViewModel
 import com.example.happibee.Presentation.Navigation.Screens
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,7 +88,7 @@ fun ColmeiaScreen(navController: NavHostController, viewModel: ColmeiasViewModel
                         }
                         Text(text = it.nomeColmeia, fontWeight = FontWeight.Bold, fontSize = 24.sp)
                         Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = it.nAbelhas.toString() + " Abelhas", fontSize = 16.sp)
+                        Text(text = it.nabelhas.toString() + " Abelhas", fontSize = 16.sp)
                         IconButton(onClick = {
                             navController.navigate(Screens.AddDesdobramentos.getDesdobramentobyId(it.id))
                         }) {
@@ -99,8 +98,13 @@ fun ColmeiaScreen(navController: NavHostController, viewModel: ColmeiasViewModel
                             )
                         }
                         IconButton(onClick = {
-                            viewModel.deleteColmeia(colmeia = it)
-                            navController.navigate(Screens.ColmeiaScreen.route)
+                            viewModel.viewModelScope.launch {
+                                viewModel.deleteColmeia(it)
+                            }
+                            navController.navigate(
+                                Screens.ColmeiaScreen.getColmeiaByApiario(
+                                    it.apiarioId!!)
+                            )
                         }) {
                             Icon(
                                 tint = Color.Red.copy(0.5f),
