@@ -68,7 +68,9 @@ class UpdateViewModel @Inject constructor(
                 .update(
                     mapOf(
                         "latitude" to latitude,
-                        "longitude" to longitude
+                        "longitude" to longitude,
+                        "status_authorization" to 0,
+                        "status_movimentation" to 0,
                     )
                 )
                 .await()

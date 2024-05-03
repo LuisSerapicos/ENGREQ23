@@ -21,7 +21,7 @@ class InspecoesViewModel @Inject constructor(
     private val inspecaoUseCase: InspecaoUseCase,
     private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
-    val inspecoes = inspecaoUseCase.getInspecoes()
+    //val inspecoes = inspecaoUseCase.getInspecoes()
 
     var id=savedStateHandle.get<Int>(key = "id")
     //val inspecoesApiario = inspecaoUseCase.getInspecoes
@@ -30,7 +30,7 @@ class InspecoesViewModel @Inject constructor(
         try {
             emit(fetchInspecoes())
         } catch (e: Exception) {
-            Log.e("GET_APIARIOS", "Erro ao obter apiários: ${e.message}")
+            Log.e("GET_INSPECOES", "Erro ao obter inspeções: ${e.message}")
             emit(emptyList<Inspecao>())
         }
     }

@@ -51,6 +51,8 @@ class AddViewModel @Inject constructor(private val useCase: ApiarioUseCase,
 
     fun addNote()=viewModelScope.launch {
         try {
+            val status_auth=0
+            val status_mov=0
             val novoApiario = Apiario(
                 name = name,
                 location = location,
@@ -59,12 +61,29 @@ class AddViewModel @Inject constructor(private val useCase: ApiarioUseCase,
                 apicultorId = 1
             )
 
-            Firebase.firestore.collection("apicultores")
+            /*Firebase.firestore.collection("apicultores")
                 .document(dataStoreManager.getName())
                 .collection("apiarios")
                 .document(name)
                 .set(novoApiario)
                 .await()
+            */
+
+            val apiariosCollection = Firebase.firestore.collection("apicultores")
+                .document(dataStoreManager.getName())
+                .collection("apiarios")
+
+            apiariosCollection.document(name).set(novoApiario).await()
+
+            apiariosCollection.document(name)
+                .update(
+                    mapOf(
+                        "status_authorization" to status_auth,
+                        "status_movimentation" to status_mov
+                    )
+                )
+                .await()
+
         } catch (e: Exception) {
             Log.e("ADD_APIARIO", "Erro ao adicionar apiário: ${e.message}")
         }

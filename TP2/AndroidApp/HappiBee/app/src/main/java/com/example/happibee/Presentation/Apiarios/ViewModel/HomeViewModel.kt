@@ -127,6 +127,7 @@ class HomeViewModel @Inject constructor(
                 val querySnapshot = Firebase.firestore.collection("apicultores")
                     .document(dataStoreManager.getName())
                     .collection("apiarios")
+                    .whereEqualTo("status_authorization", 0)
                     .get()
                     .await()
 
