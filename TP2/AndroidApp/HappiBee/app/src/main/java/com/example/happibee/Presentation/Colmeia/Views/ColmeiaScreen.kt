@@ -100,6 +100,7 @@ fun ColmeiaScreen(navController: NavHostController, viewModel: ColmeiasViewModel
                         }
                         IconButton(onClick = {
                             viewModel.deleteColmeia(colmeia = it)
+                            navController.navigate(Screens.ColmeiaScreen.route)
                         }) {
                             Icon(
                                 tint = Color.Red.copy(0.5f),

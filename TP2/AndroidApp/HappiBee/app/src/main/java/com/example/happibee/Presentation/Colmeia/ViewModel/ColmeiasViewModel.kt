@@ -5,6 +5,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.happibee.Data.Model.Colmeia
 import com.example.happibee.Data.Model.Inspecao
+import androidx.lifecycle.viewModelScope
+import com.example.happibee.Data.Model.Apiario
 import com.example.happibee.Data.UseCases.Colmeia.ColmeiaUseCase
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
@@ -14,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,6 +29,29 @@ class ColmeiasViewModel @Inject constructor(
     //val colmeiasApiario = colmeiaUseCase.getByIdApiario(id!!)
 
     var id=savedStateHandle.get<Int>(key = "id")
+    //val colmeiasApiario = colmeiaUseCase.getByIdApiario(id!!)
+
+    fun deleteColmeia(colmeia: Colmeia) = viewModelScope.launch {
+        //colmeiaUseCase.deleteColmeia(colmeia)
+        withContext(Dispatchers.IO) {
+            try {
+
+                val apicultorId = "apicultor1"
+                Firebase.firestore.collection("apicultores")
+                    .document("apicultor1")
+                    .collection("apiarios")
+                    .document("apiario1")
+                    .collection("colmeias")
+                    .document(colmeia.nomeColmeia)
+                    .delete()
+                    .await()
+
+            } catch (e: Exception) {
+                Log.e("DELETE_Colmeia", "Erro ao excluir colmeia: ${e.message}")
+            }
+        }
+
+    }
 
     val colmeiasApiario: Flow<List<Colmeia>> = flow {
         try {
